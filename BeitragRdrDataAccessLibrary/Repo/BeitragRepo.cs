@@ -27,7 +27,7 @@ namespace BeitragRdrDataAccessLibrary.Repo
                 .Include(f => f.beitragFace).ThenInclude(i => i.Image)
                 .Include(p => p.beitragPintr).ThenInclude(i => i.Image)
                 .Include(inst => inst.beitragInsta).ThenInclude(i => i.Image)
-                .Include(t => t.tags).ThenInclude(x => x.Tags);
+                .Include(t => t.tags);
 
                 return output;
             }
@@ -46,7 +46,7 @@ namespace BeitragRdrDataAccessLibrary.Repo
                 .Include(f => f.beitragFace).ThenInclude(i => i.Image)
                 .Include(p => p.beitragPintr).ThenInclude(i => i.Image)
                 .Include(inst => inst.beitragInsta).ThenInclude(i => i.Image)
-                .Include(t => t.tags).ThenInclude(x => x.Tags).FirstOrDefaultAsync();
+                .Include(t => t.tags).FirstOrDefaultAsync();
 
                 return await output;
             }

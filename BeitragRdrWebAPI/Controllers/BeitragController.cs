@@ -1,4 +1,5 @@
 ﻿using BeitragRdr.Models;
+using BeitragRdr.Models.SubModels;
 using BeitragRdrDataAccessLibrary.Data;
 using BeitragRdrDataAccessLibrary.Repo;
 using Microsoft.AspNetCore.Mvc;
@@ -13,16 +14,19 @@ namespace BeitragRdrWebAPI.Controllers
     public class BeitragController : ControllerBase
     {
         private readonly IBeitragRepo beitragRepo;
+        private readonly ILogger<BeitragController> logger;
 
-        public BeitragController(IBeitragRepo beitragRepo)
+        public BeitragController(IBeitragRepo beitragRepo, ILogger<BeitragController> logger)
         {
             this.beitragRepo = beitragRepo;
+            this.logger = logger;
         }
 
         // GET: api/<BeitragController>
         [HttpGet]
         public ActionResult<IEnumerable<Beitrag>> Get()
         {
+            logger.LogInformation("GetAllBeitrags get called");
             var output = beitragRepo.GetAllBeitragsAsync();
 
             if(output != null)

@@ -2,6 +2,8 @@
 using BeitragRdrDataAccessLibrary.Data;
 using BeitragRdrDataAccessLibrary.Repo;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.OpenApi.Models;
+using System.Reflection;
 using System.Text.Json.Serialization;
 
 namespace BeitragRdrWebAPI
@@ -24,10 +26,24 @@ namespace BeitragRdrWebAPI
 
             builder.Services.AddDbContext<AppDbContext>(opt => opt.UseSqlite("Data Source=Beitrag.db"));
 
+            builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
             builder.Services.AddControllers();
 
             builder.Services.AddEndpointsApiExplorer();
-            builder.Services.AddSwaggerGen();
+            builder.Services.AddSwaggerGen(opts =>
+            {
+                opts.SwaggerDoc("v1", new OpenApiInfo
+                {
+                    Version = "v1",
+                    Title = "User API with Addresses",
+                    Description = "Add, Remove, Delete and Update Users and their Addresses"
+                });
+
+                //var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+
+                //opts.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFile));
+            });
 
             var app = builder.Build();
 

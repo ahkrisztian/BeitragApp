@@ -16,6 +16,6 @@ namespace BeitragRdr.Models
         [StringLength(100)]
         public string Tag { get; set; }
 
-        public virtual List<BeitragTags> Beitrags { get; set; } = new List<BeitragTags>();
+        public virtual List<Beitrag> Beitrags { get; set; } = new List<Beitrag>();
     }
 }

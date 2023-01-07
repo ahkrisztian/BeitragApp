@@ -3,6 +3,7 @@ using System;
 using BeitragRdrDataAccessLibrary.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BeitragRdrDataAccessLibrary.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230107154527_removebedidfieldimagemodels")]
+    partial class removebedidfieldimagemodels
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "7.0.1");
@@ -36,6 +39,21 @@ namespace BeitragRdrDataAccessLibrary.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Beitrags");
+                });
+
+            modelBuilder.Entity("BeitragRdr.Models.BeitragTags", b =>
+                {
+                    b.Property<int>("TagId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("BeitragId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("TagId", "BeitragId");
+
+                    b.HasIndex("BeitragId");
+
+                    b.ToTable("BeitragTags");
                 });
 
             modelBuilder.Entity("BeitragRdr.Models.ImageModels.ImageModelFacebook", b =>
@@ -216,19 +234,23 @@ namespace BeitragRdrDataAccessLibrary.Migrations
                     b.ToTable("Tags");
                 });
 
-            modelBuilder.Entity("BeitragTags", b =>
+            modelBuilder.Entity("BeitragRdr.Models.BeitragTags", b =>
                 {
-                    b.Property<int>("BeitragsId")
-                        .HasColumnType("INTEGER");
+                    b.HasOne("BeitragRdr.Models.Beitrag", "Beitrag")
+                        .WithMany("tags")
+                        .HasForeignKey("BeitragId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.Property<int>("tagsId")
-                        .HasColumnType("INTEGER");
+                    b.HasOne("BeitragRdr.Models.Tags", "Tags")
+                        .WithMany("Beitrags")
+                        .HasForeignKey("TagId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.HasKey("BeitragsId", "tagsId");
+                    b.Navigation("Beitrag");
 
-                    b.HasIndex("tagsId");
-
-                    b.ToTable("BeitragTags");
+                    b.Navigation("Tags");
                 });
 
             modelBuilder.Entity("BeitragRdr.Models.ImageModels.ImageModelFacebook", b =>
@@ -297,21 +319,6 @@ namespace BeitragRdrDataAccessLibrary.Migrations
                     b.Navigation("Beitrag");
                 });
 
-            modelBuilder.Entity("BeitragTags", b =>
-                {
-                    b.HasOne("BeitragRdr.Models.Beitrag", null)
-                        .WithMany()
-                        .HasForeignKey("BeitragsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("BeitragRdr.Models.Tags", null)
-                        .WithMany()
-                        .HasForeignKey("tagsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("BeitragRdr.Models.Beitrag", b =>
                 {
                     b.Navigation("beitragFace")
@@ -322,6 +329,8 @@ namespace BeitragRdrDataAccessLibrary.Migrations
 
                     b.Navigation("beitragPintr")
                         .IsRequired();
+
+                    b.Navigation("tags");
                 });
 
             modelBuilder.Entity("BeitragRdr.Models.SubModels.BeitragFace", b =>
@@ -337,6 +346,11 @@ namespace BeitragRdrDataAccessLibrary.Migrations
             modelBuilder.Entity("BeitragRdr.Models.SubModels.BeitragPintr", b =>
                 {
                     b.Navigation("Image");
+                });
+
+            modelBuilder.Entity("BeitragRdr.Models.Tags", b =>
+                {
+                    b.Navigation("Beitrags");
                 });
 #pragma warning restore 612, 618
         }

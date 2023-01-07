@@ -1,12 +1,14 @@
 ﻿using BeitragRdr.Models.BaseModels;
 using BeitragRdr.Models.ImageModels;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace BeitragRdr.Models.SubModels;
 
 public class BeitragFace : FullBaseModel
 {
-    [Key]
+    [Key,ForeignKey("Beitrag")]
+    [Required]
     public int Id { get; set; }
     [Required]
     [StringLength(100)]
@@ -15,6 +17,7 @@ public class BeitragFace : FullBaseModel
     [StringLength(2000)]
     public string Description { get; set; }
 
-    //public int ImageModelFacebookId { get; set; }
-    public ImageModelFacebook Image { get; set; }
+    public virtual Beitrag? Beitrag { get; set; }
+
+    public virtual ImageModelFacebook? Image { get; set; }
 }

@@ -3,6 +3,7 @@ using System;
 using BeitragRdrDataAccessLibrary.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BeitragRdrDataAccessLibrary.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230107113350_optforeignkeys")]
+    partial class optforeignkeys
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "7.0.1");
@@ -38,9 +41,28 @@ namespace BeitragRdrDataAccessLibrary.Migrations
                     b.ToTable("Beitrags");
                 });
 
+            modelBuilder.Entity("BeitragRdr.Models.BeitragTags", b =>
+                {
+                    b.Property<int>("TagId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("BeitragId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("TagId", "BeitragId");
+
+                    b.HasIndex("BeitragId");
+
+                    b.ToTable("BeitragTags");
+                });
+
             modelBuilder.Entity("BeitragRdr.Models.ImageModels.ImageModelFacebook", b =>
                 {
                     b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("BeitragFaceId")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("ImageUrl")
@@ -56,6 +78,9 @@ namespace BeitragRdrDataAccessLibrary.Migrations
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("BeitragFaceId")
+                        .IsUnique();
 
                     b.ToTable("ImageModelFacebook");
                 });
@@ -63,6 +88,10 @@ namespace BeitragRdrDataAccessLibrary.Migrations
             modelBuilder.Entity("BeitragRdr.Models.ImageModels.ImageModelInstagram", b =>
                 {
                     b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("BeitragInstaId")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("ImageUrl")
@@ -78,6 +107,9 @@ namespace BeitragRdrDataAccessLibrary.Migrations
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("BeitragInstaId")
+                        .IsUnique();
 
                     b.ToTable("ImageModelInstagram");
                 });
@@ -85,6 +117,10 @@ namespace BeitragRdrDataAccessLibrary.Migrations
             modelBuilder.Entity("BeitragRdr.Models.ImageModels.ImageModelPintr", b =>
                 {
                     b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("BeitragPintrId")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("ImageUrl")
@@ -100,6 +136,9 @@ namespace BeitragRdrDataAccessLibrary.Migrations
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("BeitragPintrId")
+                        .IsUnique();
 
                     b.ToTable("ImageModelPintr");
                 });
@@ -216,26 +255,30 @@ namespace BeitragRdrDataAccessLibrary.Migrations
                     b.ToTable("Tags");
                 });
 
-            modelBuilder.Entity("BeitragTags", b =>
+            modelBuilder.Entity("BeitragRdr.Models.BeitragTags", b =>
                 {
-                    b.Property<int>("BeitragsId")
-                        .HasColumnType("INTEGER");
+                    b.HasOne("BeitragRdr.Models.Beitrag", "Beitrag")
+                        .WithMany("tags")
+                        .HasForeignKey("BeitragId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.Property<int>("tagsId")
-                        .HasColumnType("INTEGER");
+                    b.HasOne("BeitragRdr.Models.Tags", "Tags")
+                        .WithMany("Beitrags")
+                        .HasForeignKey("TagId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.HasKey("BeitragsId", "tagsId");
+                    b.Navigation("Beitrag");
 
-                    b.HasIndex("tagsId");
-
-                    b.ToTable("BeitragTags");
+                    b.Navigation("Tags");
                 });
 
             modelBuilder.Entity("BeitragRdr.Models.ImageModels.ImageModelFacebook", b =>
                 {
                     b.HasOne("BeitragRdr.Models.SubModels.BeitragFace", "BeitragFace")
                         .WithOne("Image")
-                        .HasForeignKey("BeitragRdr.Models.ImageModels.ImageModelFacebook", "Id")
+                        .HasForeignKey("BeitragRdr.Models.ImageModels.ImageModelFacebook", "BeitragFaceId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -246,7 +289,7 @@ namespace BeitragRdrDataAccessLibrary.Migrations
                 {
                     b.HasOne("BeitragRdr.Models.SubModels.BeitragInsta", "BeitragInsta")
                         .WithOne("Image")
-                        .HasForeignKey("BeitragRdr.Models.ImageModels.ImageModelInstagram", "Id")
+                        .HasForeignKey("BeitragRdr.Models.ImageModels.ImageModelInstagram", "BeitragInstaId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -257,7 +300,7 @@ namespace BeitragRdrDataAccessLibrary.Migrations
                 {
                     b.HasOne("BeitragRdr.Models.SubModels.BeitragPintr", "BeitragPintr")
                         .WithOne("Image")
-                        .HasForeignKey("BeitragRdr.Models.ImageModels.ImageModelPintr", "Id")
+                        .HasForeignKey("BeitragRdr.Models.ImageModels.ImageModelPintr", "BeitragPintrId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -297,21 +340,6 @@ namespace BeitragRdrDataAccessLibrary.Migrations
                     b.Navigation("Beitrag");
                 });
 
-            modelBuilder.Entity("BeitragTags", b =>
-                {
-                    b.HasOne("BeitragRdr.Models.Beitrag", null)
-                        .WithMany()
-                        .HasForeignKey("BeitragsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("BeitragRdr.Models.Tags", null)
-                        .WithMany()
-                        .HasForeignKey("tagsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("BeitragRdr.Models.Beitrag", b =>
                 {
                     b.Navigation("beitragFace")
@@ -322,11 +350,14 @@ namespace BeitragRdrDataAccessLibrary.Migrations
 
                     b.Navigation("beitragPintr")
                         .IsRequired();
+
+                    b.Navigation("tags");
                 });
 
             modelBuilder.Entity("BeitragRdr.Models.SubModels.BeitragFace", b =>
                 {
-                    b.Navigation("Image");
+                    b.Navigation("Image")
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("BeitragRdr.Models.SubModels.BeitragInsta", b =>
@@ -336,7 +367,13 @@ namespace BeitragRdrDataAccessLibrary.Migrations
 
             modelBuilder.Entity("BeitragRdr.Models.SubModels.BeitragPintr", b =>
                 {
-                    b.Navigation("Image");
+                    b.Navigation("Image")
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("BeitragRdr.Models.Tags", b =>
+                {
+                    b.Navigation("Beitrags");
                 });
 #pragma warning restore 612, 618
         }

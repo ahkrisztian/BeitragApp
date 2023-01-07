@@ -1,19 +1,16 @@
 ﻿using BeitragRdr.Models.SubModels;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
-namespace BeitragRdr.Models.ImageModels
+namespace BeitragRdr.Models.ImageModels;
+
+public class ImageModelPintr
 {
-    public class ImageModelPintr
-    {
-        public int Id { get; set; }
-        public string Name { get; set; }
-        public string ImageUrl { get; set; }
-        public string base64data { get; set; }
-        public int BeitragPintrId { get; set; }
-        public BeitragPintr? BeitragPintr { get; set; }
-    }
+    [Key, ForeignKey("BeitragPintr")]
+    [Required]
+    public int Id { get; set; }
+    public string Name { get; set; }
+    public string ImageUrl { get; set; }
+    public string base64data { get; set; }
+    public BeitragPintr? BeitragPintr { get; set; }
 }
