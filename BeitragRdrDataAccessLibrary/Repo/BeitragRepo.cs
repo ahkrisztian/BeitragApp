@@ -71,9 +71,9 @@ namespace BeitragRdrDataAccessLibrary.Repo
             context.SaveChangesAsync();
         }
 
-        public void UpdateBeitrag(int id)
+        public void UpdateBeitrag(Beitrag beitrag)
         {
-            context.Update(id);
+            context.Update(beitrag);
             context.SaveChangesAsync();
         }
 

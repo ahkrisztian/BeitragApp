@@ -3,11 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.4.33205.214
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BeitragRdr", "BeitragRdr\BeitragRdr.csproj", "{BFB5C719-75BD-4AD0-BB34-0F5D0E35DF99}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BeitragRdr", "BeitragRdr\BeitragRdr.csproj", "{BFB5C719-75BD-4AD0-BB34-0F5D0E35DF99}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BeitragRdrDataAccessLibrary", "BeitragRdrDataAccessLibrary\BeitragRdrDataAccessLibrary.csproj", "{7EA33629-DFC1-417E-89ED-42B01C172D02}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BeitragRdrDataAccessLibrary", "BeitragRdrDataAccessLibrary\BeitragRdrDataAccessLibrary.csproj", "{7EA33629-DFC1-417E-89ED-42B01C172D02}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BeitragRdrWebAPI", "BeitragRdrWebAPI\BeitragRdrWebAPI.csproj", "{17541FAA-12CA-410B-B9AD-7E311F42ADB0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BeitragRdrWebAPI", "BeitragRdrWebAPI\BeitragRdrWebAPI.csproj", "{17541FAA-12CA-410B-B9AD-7E311F42ADB0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BeitragRdrUnitTest", "BeitragRdrUnitTest\BeitragRdrUnitTest.csproj", "{4802680F-15CD-4BED-8F4A-B5FDE41403FE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +29,10 @@ Global
 		{17541FAA-12CA-410B-B9AD-7E311F42ADB0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{17541FAA-12CA-410B-B9AD-7E311F42ADB0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{17541FAA-12CA-410B-B9AD-7E311F42ADB0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4802680F-15CD-4BED-8F4A-B5FDE41403FE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4802680F-15CD-4BED-8F4A-B5FDE41403FE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4802680F-15CD-4BED-8F4A-B5FDE41403FE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4802680F-15CD-4BED-8F4A-B5FDE41403FE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

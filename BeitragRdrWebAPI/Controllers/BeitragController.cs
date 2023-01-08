@@ -45,7 +45,7 @@ namespace BeitragRdrWebAPI.Controllers
         }
 
         // GET api/<BeitragController>/5
-        [HttpGet("{id}")]
+        [HttpGet("{id}", Name = "GetTheBeitragsByid")]
         public async Task<ActionResult<BeitragDTO>> GetTheBeitragsByid(int id)
         {
             logger.LogInformation("GetTheBeitragsByid/{id} get called", id);
@@ -64,30 +64,44 @@ namespace BeitragRdrWebAPI.Controllers
 
         // POST api/<BeitragController>
         [HttpPost]
-        public ActionResult CreateBeitrag([FromBody] BeitragDTO beitrag)
+        public ActionResult<BeitragDTO> CreateBeitrag([FromBody] BeitragDTO beitrag)
         {
-            try
-            {               
-                beitragRepo.CreateBeitrag(mapper.Map<Beitrag>(beitrag));
-                logger.LogInformation("CreateBeitrag was called and returned Ok200");
-
-                return Ok();
-            }
-            catch (Exception ex)
+            if(beitrag == null)
             {
-
-                logger.LogWarning("The CreateBeitrag was called but error {message}", ex.Message);
+                logger.LogWarning("The CreateBeitrag was called but error.");
                 return BadRequest();
             }
+
+            var beitragmodel = mapper.Map<Beitrag>(beitrag);
+
+            beitragRepo.CreateBeitrag(beitragmodel);
+
+            var readbeitragmodel = mapper.Map<BeitragDTO>(beitragmodel);
+
+            var output = CreatedAtRoute(nameof(GetTheBeitragsByid), new { Id = beitragmodel.Id }, readbeitragmodel);
+
+            logger.LogInformation("CreateBeitrag was called and returned Ok201");
+            return output;
         }
 
         // PUT api/<BeitragController>/5
         [HttpPut("{id}")]
-        public ActionResult Put(int id, [FromBody] Beitrag beitrag)
+        public async Task<ActionResult> UpdateBeitrag(int id, BeitragDTO beitrag)
         {
-            beitragRepo.UpdateBeitrag(id);
+            var beitragmodel = await beitragRepo.GetBeitragById(id);
 
-            return Ok();
+            if(beitragmodel == null)
+            {
+                logger.LogInformation("UpdateBeitrag was called and returned NotFound404");
+                return NotFound();
+            }
+
+            mapper.Map(beitrag, beitragmodel);
+
+            beitragRepo.UpdateBeitrag(beitragmodel);
+
+            logger.LogInformation("UpdateBeitrag was called and returned NoContent204");
+            return NoContent();
 
         }
 

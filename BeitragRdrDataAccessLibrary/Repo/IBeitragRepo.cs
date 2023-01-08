@@ -8,6 +8,6 @@ namespace BeitragRdrDataAccessLibrary.Repo
         void DeleteBeitrag(int id);
         IEnumerable<Beitrag> GetAllBeitragsAsync();
         Task<Beitrag> GetBeitragById(int id);
-        void UpdateBeitrag(int id);
+        void UpdateBeitrag(Beitrag beitrag);
     }
 }
