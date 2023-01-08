@@ -1,4 +1,6 @@
-﻿using BeitragRdr.Models;
+﻿using AutoMapper;
+using BeitragRdr.DTOs;
+using BeitragRdr.Models;
 using BeitragRdr.Models.SubModels;
 using BeitragRdrDataAccessLibrary.Data;
 using BeitragRdrDataAccessLibrary.Repo;
@@ -15,49 +17,68 @@ namespace BeitragRdrWebAPI.Controllers
     {
         private readonly IBeitragRepo beitragRepo;
         private readonly ILogger<BeitragController> logger;
+        private readonly IMapper mapper;
 
-        public BeitragController(IBeitragRepo beitragRepo, ILogger<BeitragController> logger)
+        public BeitragController(IBeitragRepo beitragRepo, ILogger<BeitragController> logger, IMapper mapper)
         {
             this.beitragRepo = beitragRepo;
             this.logger = logger;
+            this.mapper = mapper;
         }
 
         // GET: api/<BeitragController>
         [HttpGet]
-        public ActionResult<IEnumerable<Beitrag>> Get()
+        public ActionResult<IEnumerable<BeitragDTO>> GetTheBeitrags()
         {
             logger.LogInformation("GetAllBeitrags get called");
             var output = beitragRepo.GetAllBeitragsAsync();
 
-            if(output != null)
+            if(output.Any())
             {
-                return Ok(output);
+                logger.LogInformation("Ok200 returned");
+                return Ok(mapper.Map<IEnumerable<BeitragDTO>>(output));               
             }
 
+            logger.LogWarning("GetAllBeitrags got called, Bad Request was returned 400");
             return BadRequest();
+            
         }
 
         // GET api/<BeitragController>/5
         [HttpGet("{id}")]
-        public ActionResult Get(int id)
+        public async Task<ActionResult<BeitragDTO>> GetTheBeitragsByid(int id)
         {
-            var output = beitragRepo.GetBeitragById(id);
+            logger.LogInformation("GetTheBeitragsByid/{id} get called", id);
+            var output = await beitragRepo.GetBeitragById(id);
 
             if (output != null)
             {
-                return Ok(output);
+                logger.LogInformation("Ok200 returned");
+                return Ok(mapper.Map<BeitragDTO>(output));
             }
 
+            logger.LogWarning("GetTheBeitragsByid/{id} got called, Bad Request was returned 400", id);
             return BadRequest();
+            
         }
 
         // POST api/<BeitragController>
         [HttpPost]
-        public ActionResult Post([FromBody] Beitrag beitrag)
+        public ActionResult CreateBeitrag([FromBody] BeitragDTO beitrag)
         {
-            beitragRepo.CreateBeitrag(beitrag);
+            try
+            {               
+                beitragRepo.CreateBeitrag(mapper.Map<Beitrag>(beitrag));
+                logger.LogInformation("CreateBeitrag was called and returned Ok200");
 
-            return Ok();
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+
+                logger.LogWarning("The CreateBeitrag was called but error {message}", ex.Message);
+                return BadRequest();
+            }
         }
 
         // PUT api/<BeitragController>/5
@@ -72,11 +93,22 @@ namespace BeitragRdrWebAPI.Controllers
 
         // DELETE api/<BeitragController>/5
         [HttpDelete("{id}")]
-        public ActionResult Delete(int id)
+        public async Task<ActionResult> DeleteBeitrag(int id)
         {
+            var result = await beitragRepo.GetBeitragById(id);
+
+            if(result == null)
+            {
+                logger.LogWarning("DeleteBeitrag/id was called and Returned NotFound404.", id);
+                return NotFound();
+            }
+
             beitragRepo.DeleteBeitrag(id);
 
-            return Ok();
+            logger.LogInformation("DeleteBeitrag/{id} was called and Returned NoContent204", id);
+
+            return NoContent();
+
         }
     }
 }

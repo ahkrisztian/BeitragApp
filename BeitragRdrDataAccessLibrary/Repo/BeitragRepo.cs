@@ -5,6 +5,7 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -42,7 +43,7 @@ namespace BeitragRdrDataAccessLibrary.Repo
         {
             try
             {
-                var output = context.Beitrags
+                var output = context.Beitrags.Where(i => i.Id == id)
                 .Include(f => f.beitragFace).ThenInclude(i => i.Image)
                 .Include(p => p.beitragPintr).ThenInclude(i => i.Image)
                 .Include(inst => inst.beitragInsta).ThenInclude(i => i.Image)
