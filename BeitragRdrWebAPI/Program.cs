@@ -24,7 +24,7 @@ namespace BeitragRdrWebAPI
 
             builder.Services.AddScoped<IBeitragRepo, BeitragRepo>();
 
-            builder.Services.AddDbContext<AppDbContext>(opt => opt.UseSqlite("Data Source=Beitrag.db"));
+            builder.Services.AddDbContext<AppDbContext>(opt => opt.UseSqlite(builder.Configuration.GetConnectionString("Default")));
 
             builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
@@ -36,22 +36,44 @@ namespace BeitragRdrWebAPI
                 opts.SwaggerDoc("v1", new OpenApiInfo
                 {
                     Version = "v1",
-                    Title = "User API with Addresses",
-                    Description = "Add, Remove, Delete and Update Users and their Addresses"
+                    Title = "Beitrag Creator",
+                    Description = "Beiträge Anlegen, Lesen, Aktualisieren und Löschen für FB, Insta und Pinterest.",
+                    Contact = new OpenApiContact()
+                    {
+                        Name= "Krisztian",
+                        Url = new Uri("https://github.com/ahkrisztian")
+                    }
                 });
 
-                //var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
 
-                //opts.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFile));
+                opts.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFile));
+            });
+
+            builder.Services.AddApiVersioning(opts =>
+            {
+                opts.AssumeDefaultVersionWhenUnspecified = true;
+                opts.DefaultApiVersion = new(1, 0);
+                opts.ReportApiVersions = true;
+            });
+
+            builder.Services.AddVersionedApiExplorer(opts =>
+            {
+                opts.GroupNameFormat = "'v'VVV";
+                opts.SubstituteApiVersionInUrl= true;
             });
 
             var app = builder.Build();
 
-            // Configure the HTTP request pipeline.
+
             if (app.Environment.IsDevelopment())
             {
                 app.UseSwagger();
-                app.UseSwaggerUI();
+                app.UseSwaggerUI(opts =>
+                {
+                    opts.SwaggerEndpoint("/swagger/v1/swagger.json", "v1");
+                    opts.RoutePrefix = string.Empty;
+                });
             }
 
             app.UseHttpsRedirection();

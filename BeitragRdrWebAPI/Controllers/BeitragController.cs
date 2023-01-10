@@ -1,18 +1,15 @@
 ﻿using AutoMapper;
 using BeitragRdr.DTOs;
 using BeitragRdr.Models;
-using BeitragRdr.Models.SubModels;
-using BeitragRdrDataAccessLibrary.Data;
 using BeitragRdrDataAccessLibrary.Repo;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace BeitragRdrWebAPI.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/v{version:apiVersion}/[controller]")]
     [ApiController]
+    [ApiVersion("1.0")]
     public class BeitragController : ControllerBase
     {
         private readonly IBeitragRepo beitragRepo;
@@ -27,6 +24,55 @@ namespace BeitragRdrWebAPI.Controllers
         }
 
         // GET: api/<BeitragController>
+        /// <summary>
+        /// Get a list of all Beitrags in the system.
+        /// </summary>
+        /// <remarks>
+        /// Sample Request: GET /Beitrag
+        /// [
+        /// {
+            ///    "name": "Winter",
+            ///    "description": "Winter",
+            ///    "beitragInsta": {
+            ///      "name": "Sommer",
+            ///      "description": "Winter",
+            ///      "createdByUserId": null,
+            ///      "createdDate": null,
+            ///      "lastModifiedUserId": null,
+            ///      "lastModifiedDate": null,
+            ///     "image": {
+            ///      "name": "string",
+            ///      "imageUrl": "string",
+            ///      "base64data": "string"
+            ///    }
+            ///    },
+            ///    "beitragFace": {
+            ///      "name": "Winter",
+            ///      "description": "Winter",
+            ///      "createdByUserId": null,
+            ///      "createdDate": null,
+            ///      "lastModifiedUserId": null,
+            ///      "lastModifiedDate": null
+            ///    },
+            ///    "beitragPintr": {
+            ///      "name": "Winter",
+            ///      "description": "Winter",
+            ///      "createdByUserId": "1",
+            ///      "createdDate": "2020-01-01T00:00:00",
+            ///      "lastModifiedUserId": "1",
+            ///      "lastModifiedDate": "2020-01-01T00:00:00"
+            ///    },
+            ///    "tags": [
+            ///      {
+            ///        "tags": {
+            ///          "tag": "Christmas"
+            ///        }
+            ///}
+            ///    ]
+            ///}
+        /// ]
+        /// </remarks>
+        /// <returns></returns>
         [HttpGet]
         public ActionResult<IEnumerable<BeitragDTO>> GetTheBeitrags()
         {
@@ -45,6 +91,55 @@ namespace BeitragRdrWebAPI.Controllers
         }
 
         // GET api/<BeitragController>/5
+        /// <summary>
+        /// Get a Beitrag from the database.
+        /// </summary>
+        /// <remarks>
+        /// Sample Request: GET /Beitrag{id}
+        /// [
+        /// {
+        ///    "name": "Winter",
+        ///    "description": "Winter",
+        ///    "beitragInsta": {
+        ///      "name": "Sommer",
+        ///      "description": "Winter",
+        ///      "createdByUserId": null,
+        ///      "createdDate": null,
+        ///      "lastModifiedUserId": null,
+        ///      "lastModifiedDate": null,
+        ///     "image": {
+        ///      "name": "string",
+        ///      "imageUrl": "string",
+        ///      "base64data": "string"
+        ///    }
+        ///    },
+        ///    "beitragFace": {
+        ///      "name": "Winter",
+        ///      "description": "Winter",
+        ///      "createdByUserId": null,
+        ///      "createdDate": null,
+        ///      "lastModifiedUserId": null,
+        ///      "lastModifiedDate": null
+        ///    },
+        ///    "beitragPintr": {
+        ///      "name": "Winter",
+        ///      "description": "Winter",
+        ///      "createdByUserId": "1",
+        ///      "createdDate": "2020-01-01T00:00:00",
+        ///      "lastModifiedUserId": "1",
+        ///      "lastModifiedDate": "2020-01-01T00:00:00"
+        ///    },
+        ///    "tags": [
+        ///      {
+        ///        "tags": {
+        ///          "tag": "Christmas"
+        ///        }
+        ///}
+        ///    ]
+        ///}
+        /// ]
+        /// </remarks>
+        /// <returns></returns>
         [HttpGet("{id}", Name = "GetTheBeitragsByid")]
         public async Task<ActionResult<BeitragDTO>> GetTheBeitragsByid(int id)
         {
@@ -63,6 +158,91 @@ namespace BeitragRdrWebAPI.Controllers
         }
 
         // POST api/<BeitragController>
+        /// <summary>
+        /// Create a Beitrag.
+        /// </summary>
+        /// <remarks>
+        /// Sample Request: POST /Beitrag
+        /// [
+        /// {
+        ///    "name": "Winter",
+        ///    "description": "Winter",
+        ///    "beitragInsta": {
+        ///      "name": "Sommer",
+        ///      "description": "Winter",
+        ///     "image": {
+        ///      "name": "string",
+        ///      "imageUrl": "string",
+        ///      "base64data": "string"
+        ///    }
+        ///    },
+        ///    "beitragFace": {
+        ///      "name": "Winter",
+        ///      "description": "Winter",
+        ///      "createdByUserId": null,
+        ///      "createdDate": null,
+        ///      "lastModifiedUserId": null,
+        ///      "lastModifiedDate": null
+        ///    },
+        ///    "beitragPintr": {
+        ///      "name": "Winter",
+        ///      "description": "Winter",
+        ///      "createdByUserId": "1",
+        ///    },
+        ///    "tags": [
+        ///      {
+        ///        "tags": {
+        ///          "tag": "Christmas"
+        ///        }
+        ///}
+        ///    ]
+        ///}
+        /// ]
+        /// </remarks>
+        /// <returns>
+        /// [
+        /// {
+        ///    "name": "Winter",
+        ///    "description": "Winter",
+        ///    "beitragInsta": {
+        ///      "name": "Sommer",
+        ///      "description": "Winter",
+        ///      "createdByUserId": null,
+        ///      "createdDate": null,
+        ///      "lastModifiedUserId": null,
+        ///      "lastModifiedDate": null,
+        ///     "image": {
+        ///      "name": "string",
+        ///      "imageUrl": "string",
+        ///      "base64data": "string"
+        ///    }
+        ///    },
+        ///    "beitragFace": {
+        ///      "name": "Winter",
+        ///      "description": "Winter",
+        ///      "createdByUserId": null,
+        ///      "createdDate": null,
+        ///      "lastModifiedUserId": null,
+        ///      "lastModifiedDate": null
+        ///    },
+        ///    "beitragPintr": {
+        ///      "name": "Winter",
+        ///      "description": "Winter",
+        ///      "createdByUserId": "1",
+        ///      "createdDate": "2020-01-01T00:00:00",
+        ///      "lastModifiedUserId": "1",
+        ///      "lastModifiedDate": "2020-01-01T00:00:00"
+        ///    },
+        ///    "tags": [
+        ///      {
+        ///        "tags": {
+        ///          "tag": "Christmas"
+        ///        }
+        ///}
+        ///    ]
+        ///}
+        /// ]
+        /// </returns>
         [HttpPost]
         public ActionResult<BeitragDTO> CreateBeitrag([FromBody] BeitragDTO beitrag)
         {
@@ -85,6 +265,13 @@ namespace BeitragRdrWebAPI.Controllers
         }
 
         // PUT api/<BeitragController>/5
+        /// <summary>
+        /// Update a Beitrag.
+        /// </summary>
+        /// <remarks>
+        /// PUT /Beitrag
+        /// </remarks>
+        /// <returns></returns>
         [HttpPut("{id}")]
         public async Task<ActionResult> UpdateBeitrag(int id, BeitragDTO beitrag)
         {
@@ -106,6 +293,13 @@ namespace BeitragRdrWebAPI.Controllers
         }
 
         // DELETE api/<BeitragController>/5
+        /// <summary>
+        /// Delete a Beitrag.
+        /// </summary>
+        /// <remarks>
+        /// DELETE /Beitrag
+        /// </remarks>
+        /// <returns></returns>
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteBeitrag(int id)
         {

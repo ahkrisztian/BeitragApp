@@ -26,10 +26,4 @@
     <ProjectReference Include="..\BeitragRdr\BeitragRdr.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <None Update="Beitrag.db">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
-
 </Project>
