@@ -141,8 +141,48 @@ namespace BeitragRdrUnitTest
         [Fact]
         public void UpdateBeitrag_Returns204NoContent()
         {
+            var newbeitrag = new Beitrag()
+            {
+                Id = 1,
+                Name = "new",
+                Description = "new",
+                beitragFace = new BeitragFace()
+                {
+                    Id = 1,
+                    Name = "test",
+                    Description = "test",
+                },
+                beitragInsta = new BeitragInsta()
+                {
+                    Id = 1,
+                    Name = "test",
+                    Description = "test",
+                    Image = new ImageModelInstagram
+                    {
+                        Id = 1,
+                        Name = "test",
+                        ImageUrl = "test.com"
+                    }
+
+                },
+                beitragPintr = new BeitragPintr()
+                {
+                    Id = 1,
+                    Name = "test",
+                    Description = "test"
+                },
+                tags = new List<Tags>()
+                {
+                    new Tags()
+                    {
+                        Id = 1,
+                        Tag = "hello"
+                    }
+                }
+            };
+
             //Arrange
-            repo.Setup(x => x.GetBeitragById(1).Result).Returns(GetBeitrags(1)[0]);
+            repo.Setup(x => x.GetBeitragById(1).Result).Returns(newbeitrag);
 
             var beitragController = new BeitragController(repo.Object, mocklogger.Object, mapper);
 
@@ -198,6 +238,21 @@ namespace BeitragRdrUnitTest
             //Act
 
             var result = beitragController.DeleteBeitrag(0);
+
+            //Assert
+            Assert.IsType<NotFoundResult>(result.Result);
+        }
+
+        [Fact]
+        public void PartialUpdateBeitrag_Returns404NotFound()
+        {
+            //Arrange
+            repo.Setup(x => x.GetBeitragById(0).Result).Returns(() => null);
+
+            var beitragController = new BeitragController(repo.Object, mocklogger.Object, mapper);
+
+            //Act
+            var result = beitragController.PartialBeitragUpdate(0, new Microsoft.AspNetCore.JsonPatch.JsonPatchDocument<BeitragDTO> {  });
 
             //Assert
             Assert.IsType<NotFoundResult>(result.Result);

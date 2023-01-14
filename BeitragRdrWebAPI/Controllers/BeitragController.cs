@@ -1,7 +1,9 @@
 ﻿using AutoMapper;
+using Azure;
 using BeitragRdr.DTOs;
 using BeitragRdr.Models;
 using BeitragRdrDataAccessLibrary.Repo;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 
 
@@ -157,7 +159,7 @@ namespace BeitragRdrWebAPI.Controllers
             
         }
 
-        // POST api/<BeitragController>
+        // POST api/BeitragController
         /// <summary>
         /// Create a Beitrag.
         /// </summary>
@@ -264,7 +266,7 @@ namespace BeitragRdrWebAPI.Controllers
             return output;
         }
 
-        // PUT api/<BeitragController>/5
+        // PUT api/BeitragController/5
         /// <summary>
         /// Update a Beitrag.
         /// </summary>
@@ -290,6 +292,41 @@ namespace BeitragRdrWebAPI.Controllers
             logger.LogInformation("UpdateBeitrag was called and returned NoContent204");
             return NoContent();
 
+        }
+
+        //PATCH api/api/BeitragController/5
+        /// <summary>
+        /// Partial update a Beitrag.
+        /// </summary>
+        /// <remarks>
+        /// PATCH /Beitrag/id
+        /// </remarks>
+        /// <returns></returns>
+        [HttpPatch("{id}")]
+        public async Task<ActionResult> PartialBeitragUpdate(int id, JsonPatchDocument<BeitragDTO> patchDocument)
+        {
+            var beitrag = await beitragRepo.GetBeitragById(id);
+
+            if(beitrag == null)
+            {
+                return NotFound();
+            }
+
+            var beitragToPatch = mapper.Map<BeitragDTO>(beitrag);
+
+
+            patchDocument.ApplyTo(beitragToPatch, ModelState);
+
+            if (!TryValidateModel(patchDocument))
+            {
+                return ValidationProblem(ModelState);
+            }
+
+            mapper.Map(beitragToPatch, beitrag);
+
+            beitragRepo.UpdateBeitrag(beitrag);
+
+            return NoContent();
         }
 
         // DELETE api/<BeitragController>/5

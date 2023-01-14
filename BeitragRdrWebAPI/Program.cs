@@ -1,8 +1,11 @@
 
 using BeitragRdrDataAccessLibrary.Data;
+using BeitragRdrDataAccessLibrary.JsonDocFilter;
 using BeitragRdrDataAccessLibrary.Repo;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
+using Newtonsoft.Json.Serialization;
 using System.Reflection;
 using System.Text.Json.Serialization;
 
@@ -12,6 +15,7 @@ namespace BeitragRdrWebAPI
     {
         public static void Main(string[] args)
         {
+
             var builder = WebApplication.CreateBuilder(args);
 
             builder.Services.AddCors(policy =>
@@ -30,6 +34,11 @@ namespace BeitragRdrWebAPI
 
             builder.Services.AddControllers();
 
+            builder.Services.AddControllers().AddNewtonsoftJson(s =>
+            {
+                s.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+            });
+
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen(opts =>
             {
@@ -40,14 +49,18 @@ namespace BeitragRdrWebAPI
                     Description = "Beiträge Anlegen, Lesen, Aktualisieren und Löschen für FB, Insta und Pinterest.",
                     Contact = new OpenApiContact()
                     {
-                        Name= "Krisztian",
+                        Name = "Krisztian",
                         Url = new Uri("https://github.com/ahkrisztian")
                     }
                 });
 
+
+
                 var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
 
                 opts.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFile));
+
+                opts.DocumentFilter<JsonPatchDocumentFilter>();
             });
 
             builder.Services.AddApiVersioning(opts =>
