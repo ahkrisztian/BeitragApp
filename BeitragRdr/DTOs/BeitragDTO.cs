@@ -14,6 +14,8 @@ namespace BeitragRdr.DTOs
 {
     public class BeitragDTO
     {
+
+        public int Id { get; set; }
         [Required]
         [StringLength(100)]
         public string Name { get; set; }
@@ -26,7 +28,7 @@ namespace BeitragRdr.DTOs
         public virtual BeitragFaceDTO beitragFace { get; set; }
         public virtual BeitragPintrDTO beitragPintr { get; set; }
 
-        public virtual CompanyReadDTO Company { get; set; } 
+        //public virtual CompanyReadDTO Company { get; set; } 
         public virtual List<TagsDTO> tags { get; set; } = new List<TagsDTO>();
     }
 }

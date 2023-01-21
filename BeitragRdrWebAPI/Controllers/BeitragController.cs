@@ -1,10 +1,12 @@
 ﻿using AutoMapper;
 using Azure;
 using BeitragRdr.DTOs;
+using BeitragRdr.DTOs.CompanyDTOs;
 using BeitragRdr.Models;
 using BeitragRdrDataAccessLibrary.Repo;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 
 namespace BeitragRdrWebAPI.Controllers
@@ -145,7 +147,6 @@ namespace BeitragRdrWebAPI.Controllers
         /// <returns></returns>
         [HttpGet("{id}", Name = "GetTheBeitragsByid}")]
         [ActionName("GetTheBeitragsByid")]
-
         public async Task<ActionResult<BeitragDTO>> GetTheBeitragsByid(int id)
         {
             logger.LogInformation("GetTheBeitragsByid/{id} get called", id);
@@ -249,7 +250,7 @@ namespace BeitragRdrWebAPI.Controllers
         /// ]
         /// </returns>
         [HttpPost]
-        public ActionResult<BeitragDTO> CreateBeitrag([FromBody] BeitragDTO beitrag)
+        public ActionResult<BeitragDTO> CreateBeitrag(CreateBeitragDTO beitrag)
         {
             if(beitrag == null)
             {
@@ -263,10 +264,11 @@ namespace BeitragRdrWebAPI.Controllers
 
             var readbeitragmodel = mapper.Map<BeitragDTO>(beitragmodel);
 
-            var output = CreatedAtRoute(nameof(GetTheBeitragsByid), new { Id = beitragmodel.Id }, readbeitragmodel);
+            var output = CreatedAtRoute(nameof(GetTheBeitragsByid), new { Id = readbeitragmodel.Id }, readbeitragmodel);
 
             logger.LogInformation("CreateBeitrag was called and returned Ok201");
-            return output;
+
+            return Ok(output);
         }
 
         // PUT api/BeitragController/5
@@ -343,6 +345,7 @@ namespace BeitragRdrWebAPI.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteBeitrag(int id)
         {
+
             var result = await beitragRepo.GetBeitragById(id);
 
             if(result == null)
@@ -410,10 +413,10 @@ namespace BeitragRdrWebAPI.Controllers
         /// </remarks>
         /// <returns></returns>
         [HttpGet("{id}")]
-        [ActionName("GetBeitragByUserId")]
-        public async Task<ActionResult<List<BeitragDTO>>> GetBeitragByUserId(int id)
+        [ActionName("GetBeitragByCompanyId")]
+        public async Task<ActionResult<List<BeitragDTO>>> GetBeitragByCompanyId(int id)
         {
-            logger.LogInformation("GetBeitragByUserId/{id} get called", id);
+            logger.LogInformation("GetBeitragByCompanyId/{id} get called", id);
             var output = await beitragRepo.GetBeitragByUserId(id);
 
             if (output != null)
@@ -422,7 +425,7 @@ namespace BeitragRdrWebAPI.Controllers
                 return Ok(mapper.Map<List<BeitragDTO>>(output));
             }
 
-            logger.LogWarning("GetBeitragByUserId/{id} got called, Bad Request was returned 400", id);
+            logger.LogWarning("GetBeitragByCompanyId/{id} got called, Bad Request was returned 400", id);
             return BadRequest();
 
         }

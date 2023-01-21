@@ -16,6 +16,7 @@ namespace BeitragRdr.Models.Address
         [StringLength(50)]
         public string PhoneNumber { get; set; }
 
+        public int CompanyId { get; set; }
         public virtual Company Company { get; set; }
     }
 }

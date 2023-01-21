@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using BeitragRdr.DTOs;
 using BeitragRdr.Models;
+using BeitragRdr.Models.CompanyModel;
 using BeitragRdr.Models.ImageModels;
 using BeitragRdr.Models.SubModels;
 using BeitragRdrDataAccessLibrary.Repo;
@@ -117,7 +118,7 @@ namespace BeitragRdrUnitTest
             var beitragController = new BeitragController(repo.Object, mocklogger.Object, mapper);
 
             //Act
-            var result = beitragController.CreateBeitrag(new BeitragDTO { });
+            var result = beitragController.CreateBeitrag(new CreateBeitragDTO { });
 
             //Assert
             Assert.IsType<ActionResult<BeitragDTO>>(result);
@@ -132,7 +133,7 @@ namespace BeitragRdrUnitTest
             var beitragController = new BeitragController(repo.Object, mocklogger.Object, mapper);
 
             //Act
-            var result = beitragController.CreateBeitrag(new BeitragDTO { });
+            var result = beitragController.CreateBeitrag(new CreateBeitragDTO { });
 
             //Assert
             Assert.IsType<CreatedAtRouteResult>(result.Result);
@@ -305,11 +306,8 @@ namespace BeitragRdrUnitTest
                 });
             }
 
-            
-
-            
-
             return models;
         }
+
     }
 }

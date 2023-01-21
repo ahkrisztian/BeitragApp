@@ -39,8 +39,10 @@ namespace BeitragRdrDataAccessLibrary.Repo
             }
         }
 
-        public async Task<Beitrag> GetBeitragById(int id)
+        public Task<Beitrag> GetBeitragById(int id)
         {
+            context.ChangeTracker.Clear();
+
             try
             {
                 var output = context.Beitrags.Where(i => i.Id == id)
@@ -49,7 +51,7 @@ namespace BeitragRdrDataAccessLibrary.Repo
                 .Include(inst => inst.beitragInsta).ThenInclude(i => i.Image)
                 .Include(t => t.tags).FirstOrDefaultAsync();
 
-                return await output;
+                return output;
             }
             catch (Exception ex)
             {
@@ -61,8 +63,9 @@ namespace BeitragRdrDataAccessLibrary.Repo
         {
             try
             {
-                var output = context.Beitrags.Where(i => i.company.Id == id)
+                var output = context.Beitrags.Where(i => i.CompanyId == id)
                     .Include(c => c.company).ThenInclude(a => a.addresses)
+                    .Include(c => c.company).ThenInclude(p => p.phoneNumbers)
                     .Include(f => f.beitragFace).ThenInclude(i => i.Image)
                     .Include(p => p.beitragPintr).ThenInclude(i => i.Image)
                     .Include(inst => inst.beitragInsta).ThenInclude(i => i.Image)
@@ -78,12 +81,21 @@ namespace BeitragRdrDataAccessLibrary.Repo
 
         public void CreateBeitrag(Beitrag beitrag)
         {
+            if(beitrag == null)
+            {
+                throw new ArgumentNullException(nameof(beitrag));
+            }
+
             context.Beitrags.Add(beitrag);
             context.SaveChangesAsync();
+
+            //return context.Beitrags.OrderByDescending(s => s.Id).FirstOrDefault().Id;
         }
 
         public void DeleteBeitrag(int id)
         {
+            context.ChangeTracker.Clear();
+
             Beitrag beigtrag = new Beitrag() { Id = id };
             context.Beitrags.Attach(beigtrag);
             context.Beitrags.Remove(beigtrag);
@@ -92,6 +104,8 @@ namespace BeitragRdrDataAccessLibrary.Repo
 
         public void UpdateBeitrag(Beitrag beitrag)
         {
+            context.ChangeTracker.Clear();
+
             context.Update(beitrag);
             context.SaveChangesAsync();
         }

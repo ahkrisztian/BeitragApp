@@ -25,6 +25,7 @@ namespace BeitragRdr.Models.Address
         [StringLength(100)]
         public string Street { get; set; }
 
+        public int CompanyId { get; set; }
         public virtual Company Company { get; set; }
 
     }

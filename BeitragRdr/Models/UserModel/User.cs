@@ -29,6 +29,5 @@ namespace BeitragRdr.Models.UserModel
 
         public List<Company> companies { get; set; } = new List<Company>();
 
-        public List<Beitrag> beitrags { get; set; } = new List<Beitrag>();
     }
 }

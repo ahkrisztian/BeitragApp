@@ -27,8 +27,13 @@ namespace BeitragRdrWebAPI.Profiles
             CreateMap<ImageModelInstagram, ImageModelInstagramDTO>();
             CreateMap<ImageModelPintr, ImageModelPintrDTO>();
             CreateMap<Company, CompanyReadDTO>();
+            CreateMap<CompanyReadDTO, Company>();
+            CreateMap<CompanyCreateDTO, Company>();
             CreateMap<AddressModel, AddressReadDTO>();
             CreateMap<PhoneNumberModel, PhoneNumberReadDTO>();
+            CreateMap<Company, CompanyCreateDTO>();
+            CreateMap<Beitrag, CreateBeitragDTO>();
+            CreateMap<CreateBeitragDTO, Beitrag>();
 
             //Create the Beitrag
             CreateMap<BeitragDTO, Beitrag>();
