@@ -3,6 +3,7 @@ using System;
 using BeitragRdrDataAccessLibrary.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BeitragRdrDataAccessLibrary.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230121130258_addedphoneusercompenymodels")]
+    partial class addedphoneusercompenymodels
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "7.0.1");
@@ -50,7 +53,7 @@ namespace BeitragRdrDataAccessLibrary.Migrations
 
                     b.HasIndex("CompanyId");
 
-                    b.ToTable("addresses");
+                    b.ToTable("AddressModel");
                 });
 
             modelBuilder.Entity("BeitragRdr.Models.Address.PhoneNumberModel", b =>
@@ -71,13 +74,16 @@ namespace BeitragRdrDataAccessLibrary.Migrations
 
                     b.HasIndex("CompanyId");
 
-                    b.ToTable("phoneNumbers");
+                    b.ToTable("PhoneNumberModel");
                 });
 
             modelBuilder.Entity("BeitragRdr.Models.Beitrag", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int?>("CompanyId")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("CreatedByUserId")
@@ -104,17 +110,14 @@ namespace BeitragRdrDataAccessLibrary.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("TEXT");
 
-                    b.Property<int?>("UserId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("companyId")
+                    b.Property<int>("userId")
                         .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("CompanyId");
 
-                    b.HasIndex("companyId");
+                    b.HasIndex("userId");
 
                     b.ToTable("Beitrags");
                 });
@@ -141,7 +144,7 @@ namespace BeitragRdrDataAccessLibrary.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("companies");
+                    b.ToTable("Company");
                 });
 
             modelBuilder.Entity("BeitragRdr.Models.ImageModels.ImageModelFacebook", b =>
@@ -395,17 +398,17 @@ namespace BeitragRdrDataAccessLibrary.Migrations
 
             modelBuilder.Entity("BeitragRdr.Models.Beitrag", b =>
                 {
-                    b.HasOne("BeitragRdr.Models.UserModel.User", null)
+                    b.HasOne("BeitragRdr.Models.CompanyModel.Company", null)
                         .WithMany("beitrags")
-                        .HasForeignKey("UserId");
+                        .HasForeignKey("CompanyId");
 
-                    b.HasOne("BeitragRdr.Models.CompanyModel.Company", "company")
+                    b.HasOne("BeitragRdr.Models.UserModel.User", "user")
                         .WithMany("beitrags")
-                        .HasForeignKey("companyId")
+                        .HasForeignKey("userId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("company");
+                    b.Navigation("user");
                 });
 
             modelBuilder.Entity("BeitragRdr.Models.CompanyModel.Company", b =>

@@ -1,8 +1,11 @@
 ﻿using AutoMapper;
 using BeitragRdr.DTOs;
+using BeitragRdr.DTOs.CompanyDTOs;
 using BeitragRdr.DTOs.ImageModelsDTOs;
 using BeitragRdr.DTOs.SubModelsDTOs;
 using BeitragRdr.Models;
+using BeitragRdr.Models.Address;
+using BeitragRdr.Models.CompanyModel;
 using BeitragRdr.Models.ImageModels;
 using BeitragRdr.Models.SubModels;
 
@@ -23,6 +26,9 @@ namespace BeitragRdrWebAPI.Profiles
             CreateMap<ImageModelFacebook, ImageModelFacebookDTO>();
             CreateMap<ImageModelInstagram, ImageModelInstagramDTO>();
             CreateMap<ImageModelPintr, ImageModelPintrDTO>();
+            CreateMap<Company, CompanyReadDTO>();
+            CreateMap<AddressModel, AddressReadDTO>();
+            CreateMap<PhoneNumberModel, PhoneNumberReadDTO>();
 
             //Create the Beitrag
             CreateMap<BeitragDTO, Beitrag>();

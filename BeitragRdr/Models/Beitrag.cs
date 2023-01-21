@@ -1,10 +1,12 @@
 ﻿using BeitragRdr.Models.BaseModels;
+using BeitragRdr.Models.CompanyModel;
 using BeitragRdr.Models.SubModels;
+using BeitragRdr.Models.UserModel;
 using System.ComponentModel.DataAnnotations;
 
 namespace BeitragRdr.Models;
 
-public class Beitrag
+public class Beitrag : IBaseModel
 {
     [Key]
     public int Id { get; set; }
@@ -19,6 +21,10 @@ public class Beitrag
 
     public virtual BeitragFace beitragFace { get; set; }
     public virtual BeitragPintr beitragPintr { get; set; }
-
+    public virtual Company company { get; set; }
     public virtual List<Tags> tags { get; set; } = new List<Tags>();
+    public string CreatedByUserId { get; set; }
+    public DateTime? CreatedDate { get; set; }
+    public string LastModifiedUserId { get; set; }
+    public DateTime? LastModifiedDate { get; set; }
 }

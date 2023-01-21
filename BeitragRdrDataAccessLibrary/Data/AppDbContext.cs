@@ -1,6 +1,9 @@
 ﻿using BeitragRdr.Models;
+using BeitragRdr.Models.Address;
+using BeitragRdr.Models.CompanyModel;
 using BeitragRdr.Models.ImageModels;
 using BeitragRdr.Models.SubModels;
+using BeitragRdr.Models.UserModel;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using System.Runtime.CompilerServices;
@@ -9,6 +12,10 @@ namespace BeitragRdrDataAccessLibrary.Data
 {
     public class AppDbContext : DbContext
     {
+        public DbSet<User> users { get; set; }
+        public DbSet<Company> companies { get; set; }
+        public DbSet<AddressModel> addresses { get; set; }
+        public DbSet<PhoneNumberModel> phoneNumbers { get; set; }
         public DbSet<Beitrag> Beitrags { get; set; }
 
         //Tags DbSets

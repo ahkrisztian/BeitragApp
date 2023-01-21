@@ -9,7 +9,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace BeitragRdrWebAPI.Controllers
 {
-    [Route("api/v{version:apiVersion}/[controller]")]
+    //[Route("api/v{version:apiVersion}/[controller]")]
+    [Route("api/v{version:apiVersion}/[controller]/[action]")]
     [ApiController]
     [ApiVersion("1.0")]
     public class BeitragController : ControllerBase
@@ -92,7 +93,7 @@ namespace BeitragRdrWebAPI.Controllers
             
         }
 
-        // GET api/<BeitragController>/5
+        // GET api/GetTheBeitragsByid/5
         /// <summary>
         /// Get a Beitrag from the database.
         /// </summary>
@@ -142,7 +143,9 @@ namespace BeitragRdrWebAPI.Controllers
         /// ]
         /// </remarks>
         /// <returns></returns>
-        [HttpGet("{id}", Name = "GetTheBeitragsByid")]
+        [HttpGet("{id}", Name = "GetTheBeitragsByid}")]
+        [ActionName("GetTheBeitragsByid")]
+
         public async Task<ActionResult<BeitragDTO>> GetTheBeitragsByid(int id)
         {
             logger.LogInformation("GetTheBeitragsByid/{id} get called", id);
@@ -353,6 +356,74 @@ namespace BeitragRdrWebAPI.Controllers
             logger.LogInformation("DeleteBeitrag/{id} was called and Returned NoContent204", id);
 
             return NoContent();
+
+        }
+
+        // GET api/<BeitragController>/5
+        /// <summary>
+        /// Get a Beitrag from the database.
+        /// </summary>
+        /// <remarks>
+        /// Sample Request: GET /Beitrag{id}
+        /// [
+        /// {
+        ///    "name": "Winter",
+        ///    "description": "Winter",
+        ///    "beitragInsta": {
+        ///      "name": "Sommer",
+        ///      "description": "Winter",
+        ///      "createdByUserId": null,
+        ///      "createdDate": null,
+        ///      "lastModifiedUserId": null,
+        ///      "lastModifiedDate": null,
+        ///     "image": {
+        ///      "name": "string",
+        ///      "imageUrl": "string",
+        ///      "base64data": "string"
+        ///    }
+        ///    },
+        ///    "beitragFace": {
+        ///      "name": "Winter",
+        ///      "description": "Winter",
+        ///      "createdByUserId": null,
+        ///      "createdDate": null,
+        ///      "lastModifiedUserId": null,
+        ///      "lastModifiedDate": null
+        ///    },
+        ///    "beitragPintr": {
+        ///      "name": "Winter",
+        ///      "description": "Winter",
+        ///      "createdByUserId": "1",
+        ///      "createdDate": "2020-01-01T00:00:00",
+        ///      "lastModifiedUserId": "1",
+        ///      "lastModifiedDate": "2020-01-01T00:00:00"
+        ///    },
+        ///    "tags": [
+        ///      {
+        ///        "tags": {
+        ///          "tag": "Christmas"
+        ///        }
+        ///}
+        ///    ]
+        ///}
+        /// ]
+        /// </remarks>
+        /// <returns></returns>
+        [HttpGet("{id}")]
+        [ActionName("GetBeitragByUserId")]
+        public async Task<ActionResult<List<BeitragDTO>>> GetBeitragByUserId(int id)
+        {
+            logger.LogInformation("GetBeitragByUserId/{id} get called", id);
+            var output = await beitragRepo.GetBeitragByUserId(id);
+
+            if (output != null)
+            {
+                logger.LogInformation("Ok200 returned");
+                return Ok(mapper.Map<List<BeitragDTO>>(output));
+            }
+
+            logger.LogWarning("GetBeitragByUserId/{id} got called, Bad Request was returned 400", id);
+            return BadRequest();
 
         }
     }

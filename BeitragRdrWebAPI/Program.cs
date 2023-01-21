@@ -62,6 +62,7 @@ namespace BeitragRdrWebAPI
 
                 opts.DocumentFilter<JsonPatchDocumentFilter>();
             });
+            
 
             builder.Services.AddApiVersioning(opts =>
             {
@@ -86,6 +87,8 @@ namespace BeitragRdrWebAPI
                 {
                     opts.SwaggerEndpoint("/swagger/v1/swagger.json", "v1");
                     opts.RoutePrefix = string.Empty;
+
+                    opts.DefaultModelsExpandDepth(-1);
                 });
             }
 

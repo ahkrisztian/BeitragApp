@@ -57,6 +57,25 @@ namespace BeitragRdrDataAccessLibrary.Repo
             }
         }
 
+        public async Task<List<Beitrag>> GetBeitragByUserId(int id)
+        {
+            try
+            {
+                var output = context.Beitrags.Where(i => i.company.Id == id)
+                    .Include(c => c.company).ThenInclude(a => a.addresses)
+                    .Include(f => f.beitragFace).ThenInclude(i => i.Image)
+                    .Include(p => p.beitragPintr).ThenInclude(i => i.Image)
+                    .Include(inst => inst.beitragInsta).ThenInclude(i => i.Image)
+                    .Include(t => t.tags).ToList();
+
+                return output;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
         public void CreateBeitrag(Beitrag beitrag)
         {
             context.Beitrags.Add(beitrag);

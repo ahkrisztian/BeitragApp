@@ -7,6 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using BeitragRdr.DTOs.SubModelsDTOs;
+using BeitragRdr.Models.CompanyModel;
+using BeitragRdr.DTOs.CompanyDTOs;
 
 namespace BeitragRdr.DTOs
 {
@@ -24,6 +26,7 @@ namespace BeitragRdr.DTOs
         public virtual BeitragFaceDTO beitragFace { get; set; }
         public virtual BeitragPintrDTO beitragPintr { get; set; }
 
+        public virtual CompanyReadDTO Company { get; set; } 
         public virtual List<TagsDTO> tags { get; set; } = new List<TagsDTO>();
     }
 }
