@@ -28,7 +28,7 @@ namespace BeitragRdrWebAPI.Controllers
             this.mapper = mapper;
         }
 
-        // GET: api/<BeitragController>
+        // GET: api/BeitragController/GetTheBeitrags
         /// <summary>
         /// Get a list of all Beitrags in the system.
         /// </summary>
@@ -36,45 +36,45 @@ namespace BeitragRdrWebAPI.Controllers
         /// Sample Request: GET /Beitrag
         /// [
         /// {
-            ///    "name": "Winter",
-            ///    "description": "Winter",
-            ///    "beitragInsta": {
-            ///      "name": "Sommer",
-            ///      "description": "Winter",
-            ///      "createdByUserId": null,
-            ///      "createdDate": null,
-            ///      "lastModifiedUserId": null,
-            ///      "lastModifiedDate": null,
-            ///     "image": {
-            ///      "name": "string",
-            ///      "imageUrl": "string",
-            ///      "base64data": "string"
-            ///    }
-            ///    },
-            ///    "beitragFace": {
-            ///      "name": "Winter",
-            ///      "description": "Winter",
-            ///      "createdByUserId": null,
-            ///      "createdDate": null,
-            ///      "lastModifiedUserId": null,
-            ///      "lastModifiedDate": null
-            ///    },
-            ///    "beitragPintr": {
-            ///      "name": "Winter",
-            ///      "description": "Winter",
-            ///      "createdByUserId": "1",
-            ///      "createdDate": "2020-01-01T00:00:00",
-            ///      "lastModifiedUserId": "1",
-            ///      "lastModifiedDate": "2020-01-01T00:00:00"
-            ///    },
-            ///    "tags": [
-            ///      {
-            ///        "tags": {
-            ///          "tag": "Christmas"
-            ///        }
-            ///}
-            ///    ]
-            ///}
+        ///    "name": "Winter",
+        ///    "description": "Winter",
+        ///    "beitragInsta": {
+        ///      "name": "Sommer",
+        ///      "description": "Winter",
+        ///      "createdByUserId": null,
+        ///      "createdDate": null,
+        ///      "lastModifiedUserId": null,
+        ///      "lastModifiedDate": null,
+        ///     "image": {
+        ///      "name": "string",
+        ///      "imageUrl": "string",
+        ///      "base64data": "string"
+        ///    }
+        ///    },
+        ///    "beitragFace": {
+        ///      "name": "Winter",
+        ///      "description": "Winter",
+        ///      "createdByUserId": null,
+        ///      "createdDate": null,
+        ///      "lastModifiedUserId": null,
+        ///      "lastModifiedDate": null
+        ///    },
+        ///    "beitragPintr": {
+        ///      "name": "Winter",
+        ///      "description": "Winter",
+        ///      "createdByUserId": "1",
+        ///      "createdDate": "2020-01-01T00:00:00",
+        ///      "lastModifiedUserId": "1",
+        ///      "lastModifiedDate": "2020-01-01T00:00:00"
+        ///    },
+        ///    "tags": [
+        ///      {
+        ///        "tags": {
+        ///          "tag": "Christmas"
+        ///        }
+        ///}
+        ///    ]
+        ///}
         /// ]
         /// </remarks>
         /// <returns></returns>

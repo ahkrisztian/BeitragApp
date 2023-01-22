@@ -9,7 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BeitragRdrDataAccessLibrary
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BeitragRdrWebAPI", "BeitragRdrWebAPI\BeitragRdrWebAPI.csproj", "{17541FAA-12CA-410B-B9AD-7E311F42ADB0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BeitragRdrUnitTest", "BeitragRdrUnitTest\BeitragRdrUnitTest.csproj", "{4802680F-15CD-4BED-8F4A-B5FDE41403FE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BeitragRdrUnitTest", "BeitragRdrUnitTest\BeitragRdrUnitTest.csproj", "{4802680F-15CD-4BED-8F4A-B5FDE41403FE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BeitragRdrBlazorServerApp", "BeitragRdrBlazorServerApp\BeitragRdrBlazorServerApp.csproj", "{80868377-6140-4FB9-8CEA-3AB3B105AA93}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{4802680F-15CD-4BED-8F4A-B5FDE41403FE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4802680F-15CD-4BED-8F4A-B5FDE41403FE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4802680F-15CD-4BED-8F4A-B5FDE41403FE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{80868377-6140-4FB9-8CEA-3AB3B105AA93}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{80868377-6140-4FB9-8CEA-3AB3B105AA93}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{80868377-6140-4FB9-8CEA-3AB3B105AA93}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{80868377-6140-4FB9-8CEA-3AB3B105AA93}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,0 +1,94 @@
+﻿@page "/"
+@page "/beitrags"
+
+<PageTitle>Beiträge</PageTitle>
+
+<div class="beitrag-container">
+    <button class="suggest-btn btn btn-outline-light btn-lg text-uppercase">Beitrag erstellen</button>
+</div>
+
+<div class="beitrag-container">
+    <button class="btn btn-order" @onclick="(() => DescOrder())">Date</button>
+    <button class="btn btn-order" @onclick="(() => AscOrder())">Date</button>
+</div>
+
+<div class="row">
+    <div class="col-md-8 col-xl-9">
+        @if (beitrags == null)
+        {
+            <p>Loading...</p>
+        }
+        else
+        {
+            <div>
+                @foreach (var beitrag in beitrags)
+                {
+                    if(beitrag.BeitragStatus == BeitragRdr.DTOs.BeitragStatus.UpComing)
+                    {
+                        <div class="beitrag-entry">
+                            <div class="beitrag-detail">
+                                <span>Details</span>
+                            </div>
+                            <div class="beitrag-entry-text-title">
+                                <div class="beibeitrag-entry-text-title">
+                                    <p>@beitrag.Name</p><br>
+                                    <p>@beitrag.PostDate</p>
+                                </div>
+                                <div class="beitrag-entry-text-description">
+                                    <p>@beitrag.Description</p>
+                                    
+                                </div>
+                            </div>
+                            <div class="beitrag-entry-status-upcoming">
+                                <span>Upcoming</span>
+                            </div>
+                        </div>
+                    }
+                    else if(beitrag.BeitragStatus == BeitragRdr.DTOs.BeitragStatus.InProcess)
+                    {
+                        <div class="beitrag-entry">
+                            <div class="beitrag-detail">
+                                <span>Details</span>
+                            </div>
+                            <div class="beitrag-entry-text-title">
+                                <div class="beibeitrag-entry-text-title">
+                                    <p>@beitrag.Name</p>
+                                    <p>@beitrag.PostDate</p>
+                                </div>
+                                <div class="beitrag-entry-text-description">
+                                    <p>@beitrag.Description</p>
+                                    
+                                </div>
+                            </div>
+                            <div class="beitrag-entry-status-inprocess">
+                                <span>In Process</span>
+                            </div>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="beitrag-entry">
+                            <div class="beitrag-detail">
+                                <span>Details</span>
+                            </div>
+                            <div class="beitrag-entry-text-title">
+                                <div class="beibeitrag-entry-text-title">
+                                    <p>@beitrag.Name</p>
+                                    <p>@beitrag.PostDate</p>
+                                </div>
+                                <div class="beitrag-entry-text-description">
+                                    <p>@beitrag.Description</p>
+                                    
+                                </div>
+                            </div>
+                            <div class="beitrag-entry-status-completed">
+                                <span>Completed</span>
+                            </div>
+                        </div>
+                    }
+                }
+            </div>
+        }
+    </div>
+</div>
+

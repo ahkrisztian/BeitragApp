@@ -6,6 +6,12 @@ using System.ComponentModel.DataAnnotations;
 
 namespace BeitragRdr.Models;
 
+public enum BeitragStatus
+{
+    Complete = 0,
+    InProcess = 1,
+    UpComing = 2
+}
 public class Beitrag : IBaseModel
 {
     [Key]
@@ -29,4 +35,9 @@ public class Beitrag : IBaseModel
     public DateTime? CreatedDate { get; set; } = DateTime.Now;
     public string? LastModifiedUserId { get; set; }
     public DateTime? LastModifiedDate { get; set; }
+
+    public DateTime? PostDate {get; set; }
+
+    public DateTime? PostedDate { get; set; }
+    public BeitragStatus? BeitragStatus { get; set; }
 }
