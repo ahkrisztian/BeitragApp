@@ -1,0 +1,27 @@
+﻿@page "/Create"
+@inject NavigationManager navManager
+
+<h3>Create</h3>
+
+<div>
+    <EditForm Model="@createBeitragDTO" OnValidSubmit="@OnValidSubmit">
+        <ValidationSummary/>
+
+        <div class="form-group">
+            <label>Name:</label>
+            <InputText id="name" class="form-control" @bind-Value="createBeitragDTO.Name" />
+        </div>
+
+        <div class="form-group">
+            <label>Name:</label>
+            <InputText id="desc" class="form-control" @bind-Value="createBeitragDTO.Description" />
+        </div>
+
+        <div class="form-group">
+            <label>Company Id:</label>
+            <InputNumber id="compid" class="form-control" @bind-Value="createBeitragDTO.CompanyId" />
+        </div>
+
+        <button class="btn btn-success btn-lg btn-block" style="margin-top: 10px" type="submit">Submit</button>
+    </EditForm>
+</div>

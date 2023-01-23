@@ -266,9 +266,9 @@ namespace BeitragRdrWebAPI.Controllers
 
             var output = CreatedAtRoute(nameof(GetTheBeitragsByid), new { Id = readbeitragmodel.Id }, readbeitragmodel);
 
-            logger.LogInformation("CreateBeitrag was called and returned Ok201");
+            logger.LogInformation("CreateBeitrag was called and returned Ok200");
 
-            return Ok(output);
+            return Ok(output.Value);
         }
 
         // PUT api/BeitragController/5

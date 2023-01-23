@@ -11,7 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BeitragRdrWebAPI", "Beitrag
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BeitragRdrUnitTest", "BeitragRdrUnitTest\BeitragRdrUnitTest.csproj", "{4802680F-15CD-4BED-8F4A-B5FDE41403FE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BeitragRdrBlazorServerApp", "BeitragRdrBlazorServerApp\BeitragRdrBlazorServerApp.csproj", "{80868377-6140-4FB9-8CEA-3AB3B105AA93}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BeitragRdrBlazorServerApp", "BeitragRdrBlazorServerApp\BeitragRdrBlazorServerApp.csproj", "{80868377-6140-4FB9-8CEA-3AB3B105AA93}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -1,15 +1,24 @@
 ﻿@page "/"
 @page "/beitrags"
+@inject NavigationManager navManager
 
 <PageTitle>Beiträge</PageTitle>
 
-<div class="beitrag-container">
-    <button class="suggest-btn btn btn-outline-light btn-lg text-uppercase">Beitrag erstellen</button>
+<h1 class="page-heading text-uppercase mb-4">Beiträge</h1>
+
+<div class="page-heading">
+    <button class="suggest-btn btn btn-outline-light btn-lg text-uppercase" @onclick="(() => OpenCreateBeitrag())">Beitrag erstellen</button>
 </div>
 
-<div class="beitrag-container">
-    <button class="btn btn-order" @onclick="(() => DescOrder())">Date</button>
-    <button class="btn btn-order" @onclick="(() => AscOrder())">Date</button>
+<div class="row">
+    <div class="col-md-4 col-xl-5">
+        <button class="btn btn-order" @onclick="(() => DescOrder())"> Datum absteigend</button>
+        <button class="btn btn-order" @onclick="(() => AscOrder())"> Datum aufsteigend</button>
+    </div>
+
+    <div class="col-md-4 col-xl-3">
+        <input type="text" placeholder="Search" aria-label="Search box" class="form-control rounded-control" @oninput="((txt) => OnSearchInput((string)txt.Value))" />
+    </div>   
 </div>
 
 <div class="row">
@@ -23,10 +32,10 @@
             <div>
                 @foreach (var beitrag in beitrags)
                 {
-                    if(beitrag.BeitragStatus == BeitragRdr.DTOs.BeitragStatus.UpComing)
+                    if (beitrag.BeitragStatus == BeitragRdr.DTOs.BeitragStatus.UpComing)
                     {
                         <div class="beitrag-entry">
-                            <div class="beitrag-detail">
+                            <div class="beitrag-detail" @onclick="(() => OpenDetails(beitrag))">
                                 <span>Details</span>
                             </div>
                             <div class="beitrag-entry-text-title">
@@ -36,7 +45,6 @@
                                 </div>
                                 <div class="beitrag-entry-text-description">
                                     <p>@beitrag.Description</p>
-                                    
                                 </div>
                             </div>
                             <div class="beitrag-entry-status-upcoming">
@@ -44,9 +52,9 @@
                             </div>
                         </div>
                     }
-                    else if(beitrag.BeitragStatus == BeitragRdr.DTOs.BeitragStatus.InProcess)
+                    else if (beitrag.BeitragStatus == BeitragRdr.DTOs.BeitragStatus.InProcess)
                     {
-                        <div class="beitrag-entry">
+                        <div class="beitrag-entry" @onclick="(() => OpenDetails(beitrag))">
                             <div class="beitrag-detail">
                                 <span>Details</span>
                             </div>
@@ -57,7 +65,7 @@
                                 </div>
                                 <div class="beitrag-entry-text-description">
                                     <p>@beitrag.Description</p>
-                                    
+
                                 </div>
                             </div>
                             <div class="beitrag-entry-status-inprocess">
@@ -67,7 +75,7 @@
                     }
                     else
                     {
-                        <div class="beitrag-entry">
+                        <div class="beitrag-entry" @onclick="(() => OpenDetails(beitrag))">
                             <div class="beitrag-detail">
                                 <span>Details</span>
                             </div>
@@ -78,7 +86,7 @@
                                 </div>
                                 <div class="beitrag-entry-text-description">
                                     <p>@beitrag.Description</p>
-                                    
+
                                 </div>
                             </div>
                             <div class="beitrag-entry-status-completed">
@@ -89,6 +97,14 @@
                 }
             </div>
         }
+    </div>    
+    <div class="col-md-4 col-xl-3 d-none d-md-block">       
+        <div class="categories">
+            <span class="text-uppercase fw-bold">Status</span>
+            <div @onclick='(() => FilterBeigtrags("all"))'>Alles</div>
+            <div @onclick='(() => FilterBeigtrags("completed"))'>Completed</div>
+            <div @onclick='(() => FilterBeigtrags("inprocess"))'>In Process</div>
+            <div @onclick='(() => FilterBeigtrags("upcoming"))'>UpComing</div>
+        </div>
     </div>
 </div>
-

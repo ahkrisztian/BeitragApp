@@ -12,28 +12,79 @@ namespace BeitragRdrBlazorServerApp.Pages
 
         private ObservableCollection<BeitragDTO>? beitrags;
 
-
+        private string search = "";
         protected override async Task OnInitializedAsync()
         {
             var allbeitrags = await dataAccess.Beitrags();
 
             beitrags = new ObservableCollection<BeitragDTO>(allbeitrags.OrderByDescending(x => x.PostDate).ToList());
 
+
             base.OnInitializedAsync();
         }
 
         private async Task DescOrder()
         {
-            var allbeitrags = await dataAccess.Beitrags();
-
-            beitrags = new ObservableCollection<BeitragDTO>(allbeitrags.OrderByDescending(x => x.PostDate).ToList());
+            beitrags = new ObservableCollection<BeitragDTO>(beitrags.OrderByDescending(x => x.PostDate).ToList());
         }
 
         private async Task AscOrder()
         {
+            beitrags = new ObservableCollection<BeitragDTO>(beitrags.OrderBy(x => x.PostDate).ToList());
+        }
+
+        private async Task FilterBeigtrags(string filter)
+        {
+            var output = await dataAccess.Beitrags();
+
+            List<BeitragDTO> allbeitrags = output.ToList().Where(x => x.Name.ToLower().Contains(search.ToLower())).ToList();
+
+            if (filter == "completed")
+            {
+                beitrags = new ObservableCollection<BeitragDTO>(allbeitrags.Where(x => x.BeitragStatus == BeitragStatus.Complete).ToList());
+            }
+
+            if(filter == "inprocess")
+            {
+                beitrags = new ObservableCollection<BeitragDTO>(allbeitrags.Where(x => x.BeitragStatus == BeitragStatus.InProcess).ToList());
+            }
+
+            if(filter == "upcoming")
+            {
+                beitrags = new ObservableCollection<BeitragDTO>(allbeitrags.Where(x => x.BeitragStatus == BeitragStatus.UpComing).ToList());
+            }
+
+            if( filter == "all")
+            {
+                beitrags = new ObservableCollection<BeitragDTO>(allbeitrags.ToList());
+            }
+        }
+
+        private async Task OnSearchInput(string searchtext)
+        {
             var allbeitrags = await dataAccess.Beitrags();
 
-            beitrags = new ObservableCollection<BeitragDTO>(allbeitrags.OrderBy(x => x.PostDate).ToList());
+            if (String.IsNullOrEmpty(searchtext))
+            {
+                beitrags = new ObservableCollection<BeitragDTO>(allbeitrags.ToList());
+            }
+
+            search = searchtext;
+
+            List<BeitragDTO> result = beitrags.ToList().Where(x => x.Name.ToLower().Contains(searchtext.ToLower())).ToList();
+
+            beitrags = new ObservableCollection<BeitragDTO>(result);
         }
+
+        private void OpenDetails(BeitragDTO beitrag)
+        {
+            navManager.NavigateTo($"/Details/{beitrag.Id}");
+        }
+
+        private void OpenCreateBeitrag()
+        {
+            navManager.NavigateTo("/Create/");
+        }
+        
     }
 }

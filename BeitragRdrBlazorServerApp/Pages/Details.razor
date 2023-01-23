@@ -1,0 +1,53 @@
+﻿@page "/Details/{id}"
+@inject NavigationManager navManager
+
+<h3>Details</h3>
+
+@if(beitragDTO is not null)
+{
+    <div class="row justify-content-center">
+        <div class="col-xl-8 col-lg-10">
+            <div class="beitrag-entry-text-details">
+                <div>@beitragDTO.PostDate</div>
+                <div>@beitragDTO.Name</div>
+                <div>@beitragDTO.Description</div>
+            </div>
+            <div class="beitrag-entry-text-details">
+                <div>@beitragDTO.beitragFace.Name</div>
+                <div>@beitragDTO.beitragFace.Description</div>
+                <div>
+                    <img src="@beitragDTO.beitragFace.Image.ImageUrl" width="100px" height="100px"/>
+                </div>
+            </div>
+            <div class="beitrag-entry-text-details">
+                <div>@beitragDTO.beitragInsta.Name</div>
+                <div>@beitragDTO.beitragInsta.Description</div>
+                <div>
+                    <img src="@beitragDTO.beitragInsta.Image.ImageUrl" width="100px" height="100px" />
+                </div>
+            </div>
+            <div class="beitrag-entry-text-details">
+                <div>@beitragDTO.beitragPintr.Name</div>
+                <div>@beitragDTO.beitragPintr.Description</div>
+                <div>
+                    <img src="@beitragDTO.beitragPintr.Image.ImageUrl" width="100px" height="100px" />
+                </div>
+            </div>
+            <div class="beitrag-entry-text-details">
+                <div class="row">
+                    @foreach(var tag in beitragDTO.tags)
+                    {
+                        <p>@tag.Tag</p>
+                    }
+                </div>
+            </div>
+            <div class="beitrag-entry-text-details">
+                <div>@beitragDTO.BeitragStatus</div>
+            </div>
+        </div>
+    </div>
+}
+else
+{
+    <p>Loading...</p>
+}
