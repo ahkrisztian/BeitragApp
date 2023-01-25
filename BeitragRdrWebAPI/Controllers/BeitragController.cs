@@ -429,5 +429,22 @@ namespace BeitragRdrWebAPI.Controllers
             return BadRequest();
 
         }
+
+        [HttpGet]
+        [ActionName("GetCompanies")]
+        public async Task<ActionResult<List<CompanyReadDTO>>> GetCompanies()
+        {
+            logger.LogInformation("GetCompanies/ get called");
+            var output = await beitragRepo.Companies();
+
+            if (output != null)
+            {
+                logger.LogInformation("Ok200 returned");
+                return Ok(mapper.Map<List<CompanyReadDTO>>(output));
+            }
+
+            logger.LogWarning("GetCompaniesgot called, Bad Request was returned 400");
+            return BadRequest();
+        }
     }
 }

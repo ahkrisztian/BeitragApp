@@ -50,7 +50,7 @@ namespace BeitragRdrDataAccessLibrary.Migrations
 
                     b.HasIndex("CompanyId");
 
-                    b.ToTable("addresses");
+                    b.ToTable("addresses", (string)null);
                 });
 
             modelBuilder.Entity("BeitragRdr.Models.Address.PhoneNumberModel", b =>
@@ -71,7 +71,7 @@ namespace BeitragRdrDataAccessLibrary.Migrations
 
                     b.HasIndex("CompanyId");
 
-                    b.ToTable("phoneNumbers");
+                    b.ToTable("phoneNumbers", (string)null);
                 });
 
             modelBuilder.Entity("BeitragRdr.Models.Beitrag", b =>
@@ -118,7 +118,7 @@ namespace BeitragRdrDataAccessLibrary.Migrations
 
                     b.HasIndex("CompanyId");
 
-                    b.ToTable("Beitrags");
+                    b.ToTable("Beitrags", (string)null);
                 });
 
             modelBuilder.Entity("BeitragRdr.Models.CompanyModel.Company", b =>
@@ -143,7 +143,7 @@ namespace BeitragRdrDataAccessLibrary.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("companies");
+                    b.ToTable("companies", (string)null);
                 });
 
             modelBuilder.Entity("BeitragRdr.Models.ImageModels.ImageModelFacebook", b =>
@@ -165,7 +165,7 @@ namespace BeitragRdrDataAccessLibrary.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ImageModelFacebook");
+                    b.ToTable("ImageModelFacebook", (string)null);
                 });
 
             modelBuilder.Entity("BeitragRdr.Models.ImageModels.ImageModelInstagram", b =>
@@ -187,7 +187,7 @@ namespace BeitragRdrDataAccessLibrary.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ImageModelInstagram");
+                    b.ToTable("ImageModelInstagram", (string)null);
                 });
 
             modelBuilder.Entity("BeitragRdr.Models.ImageModels.ImageModelPintr", b =>
@@ -209,7 +209,7 @@ namespace BeitragRdrDataAccessLibrary.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ImageModelPintr");
+                    b.ToTable("ImageModelPintr", (string)null);
                 });
 
             modelBuilder.Entity("BeitragRdr.Models.SubModels.BeitragFace", b =>
@@ -241,7 +241,7 @@ namespace BeitragRdrDataAccessLibrary.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("beitragFaces");
+                    b.ToTable("beitragFaces", (string)null);
                 });
 
             modelBuilder.Entity("BeitragRdr.Models.SubModels.BeitragInsta", b =>
@@ -273,7 +273,7 @@ namespace BeitragRdrDataAccessLibrary.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("beitragInstas");
+                    b.ToTable("beitragInstas", (string)null);
                 });
 
             modelBuilder.Entity("BeitragRdr.Models.SubModels.BeitragPintr", b =>
@@ -305,7 +305,7 @@ namespace BeitragRdrDataAccessLibrary.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("beitragPintrs");
+                    b.ToTable("beitragPintrs", (string)null);
                 });
 
             modelBuilder.Entity("BeitragRdr.Models.Tags", b =>
@@ -321,7 +321,7 @@ namespace BeitragRdrDataAccessLibrary.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Tags");
+                    b.ToTable("Tags", (string)null);
                 });
 
             modelBuilder.Entity("BeitragRdr.Models.UserModel.User", b =>
@@ -355,7 +355,7 @@ namespace BeitragRdrDataAccessLibrary.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("users");
+                    b.ToTable("users", (string)null);
                 });
 
             modelBuilder.Entity("BeitragTags", b =>
@@ -370,7 +370,7 @@ namespace BeitragRdrDataAccessLibrary.Migrations
 
                     b.HasIndex("tagsId");
 
-                    b.ToTable("BeitragTags");
+                    b.ToTable("BeitragTags", (string)null);
                 });
 
             modelBuilder.Entity("BeitragRdr.Models.Address.AddressModel", b =>

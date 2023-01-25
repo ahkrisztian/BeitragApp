@@ -1,4 +1,5 @@
 ﻿using BeitragRdr.DTOs;
+using BeitragRdr.DTOs.CompanyDTOs;
 
 namespace BeitragRdrBlazorServerApp.Data
 {
@@ -9,5 +10,7 @@ namespace BeitragRdrBlazorServerApp.Data
         Task<BeitragDTO> BeitragById(int id);
 
         Task<BeitragDTO> CreateBeitrag(CreateBeitragDTO createBeitragDTO);
+
+        Task<List<CompanyReadDTO>> Companies();
     }
 }

@@ -258,3 +258,17 @@ a, .btn-link {
         .categories div:hover {
             cursor: pointer;
         }
+.altert-entry {
+    width: 150px;
+    background-color: #6e4a65;
+    color: #d4f4dd;
+    font-size: 0.6rem;
+    font-weight: 100;
+}
+
+.create-beitrag-entry {
+    margin: 1rem;
+    background-color: #6e4a65;
+    border-radius: 10px;
+    padding: 1rem;
+}

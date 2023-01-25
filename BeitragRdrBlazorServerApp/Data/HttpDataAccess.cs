@@ -1,4 +1,5 @@
 ﻿using BeitragRdr.DTOs;
+using BeitragRdr.DTOs.CompanyDTOs;
 using BeitragRdrBlazorServerApp.Policies;
 using System.Collections.ObjectModel;
 using System.Security.Policy;
@@ -45,6 +46,16 @@ namespace BeitragRdrBlazorServerApp.Data
 
             return await response.Content.ReadFromJsonAsync<BeitragDTO>();
 
+        }
+
+        public async Task<List<CompanyReadDTO>> Companies()
+        {
+            var response = await policies.ImmediateHttpRetry.ExecuteAsync(
+                        () => httpClientFactory.CreateClient("base").GetAsync($"/api/v1/Beitrag/GetCompanies/"));
+
+            response.EnsureSuccessStatusCode();
+
+            return await response.Content.ReadFromJsonAsync<List<CompanyReadDTO>>();
         }
     }
 }

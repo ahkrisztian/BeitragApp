@@ -1,4 +1,6 @@
-﻿using BeitragRdr.Models;
+﻿using BeitragRdr.DTOs.CompanyDTOs;
+using BeitragRdr.Models;
+using BeitragRdr.Models.CompanyModel;
 using BeitragRdrDataAccessLibrary.Data;
 using Microsoft.EntityFrameworkCore;
 
@@ -101,6 +103,13 @@ namespace BeitragRdrDataAccessLibrary.Repo
 
             context.Update(beitrag);
             context.SaveChangesAsync();
+        }
+
+        public async Task<List<Company>> Companies()
+        {
+            return await context.companies
+                .Include(a => a.addresses)
+                .Include(p => p.phoneNumbers).ToListAsync();
         }
 
     }

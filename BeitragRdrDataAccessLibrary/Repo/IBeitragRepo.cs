@@ -1,4 +1,5 @@
 ﻿using BeitragRdr.Models;
+using BeitragRdr.Models.CompanyModel;
 
 namespace BeitragRdrDataAccessLibrary.Repo
 {
@@ -11,5 +12,7 @@ namespace BeitragRdrDataAccessLibrary.Repo
 
         Task<List<Beitrag>> GetBeitragByUserId(int id);
         void UpdateBeitrag(Beitrag beitrag);
+
+        Task<List<Company>> Companies();
     }
 }

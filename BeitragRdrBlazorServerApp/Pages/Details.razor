@@ -11,36 +11,70 @@
                 <div>@beitragDTO.PostDate</div>
                 <div>@beitragDTO.Name</div>
                 <div>@beitragDTO.Description</div>
-            </div>
-            <div class="beitrag-entry-text-details">
-                <div>@beitragDTO.beitragFace.Name</div>
-                <div>@beitragDTO.beitragFace.Description</div>
-                <div>
-                    <img src="@beitragDTO.beitragFace.Image.ImageUrl" width="100px" height="100px"/>
+            </div>                          
+                @if(beitragDTO.beitragFace != null)
+                {
+                    <div class="beitrag-entry-text-details">
+                        <div>@beitragDTO.beitragFace.Name</div>
+                        <div>@beitragDTO.beitragFace.Description</div>
+                        <div>
+                        @if(beitragDTO.beitragFace.Image != null)
+                        {
+                            <img src="@beitragDTO.beitragFace.Image.ImageUrl" width="100" height="100" />
+                        }
+                        else
+                        {
+                            <p>No image</p>
+                        }
+                        </div>
+                    </div>   
+                }
+            @if (beitragDTO.beitragInsta != null)
+            {
+                <div class="beitrag-entry-text-details">
+                    <div>@beitragDTO.beitragInsta.Name</div>
+                    <div>@beitragDTO.beitragInsta.Description</div>
+                    <div>
+                        @if (beitragDTO.beitragInsta.Image != null)
+                        {
+                            <img src="@beitragDTO.beitragInsta.Image.ImageUrl" width="100" height="100" />
+                        }
+                        else
+                        {
+                            <p>No image</p>
+                        }
+                    </div>
                 </div>
-            </div>
-            <div class="beitrag-entry-text-details">
-                <div>@beitragDTO.beitragInsta.Name</div>
-                <div>@beitragDTO.beitragInsta.Description</div>
-                <div>
-                    <img src="@beitragDTO.beitragInsta.Image.ImageUrl" width="100px" height="100px" />
+            }
+
+            @if (beitragDTO.beitragPintr != null)
+            {
+                <div class="beitrag-entry-text-details">
+                    <div>@beitragDTO.beitragPintr.Name</div>
+                    <div>@beitragDTO.beitragPintr.Description</div>
+                    <div>
+                        @if (beitragDTO.beitragPintr.Image != null)
+                        {
+                            <img src="@beitragDTO.beitragPintr.Image.ImageUrl" width="100" height="100" />
+                        }
+                        else
+                        {
+                            <p>No image</p>
+                        }
+                    </div>
                 </div>
-            </div>
-            <div class="beitrag-entry-text-details">
-                <div>@beitragDTO.beitragPintr.Name</div>
-                <div>@beitragDTO.beitragPintr.Description</div>
-                <div>
-                    <img src="@beitragDTO.beitragPintr.Image.ImageUrl" width="100px" height="100px" />
+            }
+            @if(beitragDTO.tags.Count > 0)
+            {
+                <div class="beitrag-entry-text-details">
+                    <div class="row">
+                        @foreach(var tag in beitragDTO.tags)
+                        {
+                            <p>@tag.Tag</p>
+                        }
+                    </div>
                 </div>
-            </div>
-            <div class="beitrag-entry-text-details">
-                <div class="row">
-                    @foreach(var tag in beitragDTO.tags)
-                    {
-                        <p>@tag.Tag</p>
-                    }
-                </div>
-            </div>
+            }           
             <div class="beitrag-entry-text-details">
                 <div>@beitragDTO.BeitragStatus</div>
             </div>
