@@ -4,107 +4,113 @@
 
 <PageTitle>Beiträge</PageTitle>
 
-<h1 class="page-heading text-uppercase mb-4">Beiträge</h1>
+<div class="container justify-content-center">
+    <h1 class="page-heading text-uppercase mb-4">Beiträge</h1>
 
-<div class="page-heading">
-    <button class="suggest-btn btn btn-outline-light btn-lg text-uppercase" @onclick="(() => OpenCreateBeitrag())">Beitrag erstellen</button>
-</div>
-
-<div class="row">
-    <div class="col-md-4 col-xl-5">
-        <button class="btn btn-order" @onclick="(() => DescOrder())"> Datum absteigend</button>
-        <button class="btn btn-order" @onclick="(() => AscOrder())"> Datum aufsteigend</button>
+    <div class="page-heading">
+        <button class="suggest-btn btn btn-outline-light btn-lg text-uppercase" @onclick="(() => OpenCreateBeitrag())">Beitrag erstellen</button>
     </div>
 
-    <div class="col-md-4 col-xl-3">
-        <input type="text" placeholder="Search" aria-label="Search box" class="form-control rounded-control" @oninput="((txt) => OnSearchInput((string)txt.Value))" />
-    </div>   
-</div>
-
-<div class="row">
-    <div class="col-md-8 col-xl-9">
-        @if (beitrags == null)
-        {
-            <p>Loading...</p>
-        }
-        else
-        {
-            <div>
-                @foreach (var beitrag in beitrags)
-                {
-                    if (beitrag.BeitragStatus == BeitragRdr.DTOs.BeitragStatus.UpComing)
-                    {
-                        <div class="beitrag-entry">
-                            <div class="beitrag-detail" @onclick="(() => OpenDetails(beitrag))">
-                                <span>Details</span>
-                            </div>
-                            <div class="beitrag-entry-text-title">
-                                <div class="beibeitrag-entry-text-title">
-                                    <p>@beitrag.Name</p><br>
-                                    <p>@beitrag.PostDate</p>
-                                </div>
-                                <div class="beitrag-entry-text-description">
-                                    <p>@beitrag.Description</p>
-                                </div>
-                            </div>
-                            <div class="beitrag-entry-status-upcoming">
-                                <span>Upcoming</span>
-                            </div>
-                        </div>
-                    }
-                    else if (beitrag.BeitragStatus == BeitragRdr.DTOs.BeitragStatus.InProcess)
-                    {
-                        <div class="beitrag-entry" @onclick="(() => OpenDetails(beitrag))">
-                            <div class="beitrag-detail">
-                                <span>Details</span>
-                            </div>
-                            <div class="beitrag-entry-text-title">
-                                <div class="beibeitrag-entry-text-title">
-                                    <p>@beitrag.Name</p>
-                                    <p>@beitrag.PostDate</p>
-                                </div>
-                                <div class="beitrag-entry-text-description">
-                                    <p>@beitrag.Description</p>
-
-                                </div>
-                            </div>
-                            <div class="beitrag-entry-status-inprocess">
-                                <span>In Process</span>
-                            </div>
-                        </div>
-                    }
-                    else
-                    {
-                        <div class="beitrag-entry" @onclick="(() => OpenDetails(beitrag))">
-                            <div class="beitrag-detail">
-                                <span>Details</span>
-                            </div>
-                            <div class="beitrag-entry-text-title">
-                                <div class="beibeitrag-entry-text-title">
-                                    <p>@beitrag.Name</p>
-                                    <p>@beitrag.PostDate</p>
-                                </div>
-                                <div class="beitrag-entry-text-description">
-                                    <p>@beitrag.Description</p>
-
-                                </div>
-                            </div>
-                            <div class="beitrag-entry-status-completed">
-                                <span>Completed</span>
-                            </div>
-                        </div>
-                    }
-                }
+    <div>
+        <div class="row">
+            <div class="row col-sm-6 page-heading">
+                <div class="btn-group justify-content-center">
+                    <button class="btn btn-order" @onclick="(() => DescOrder())"> Datum absteigend</button>
+                    <button class="btn btn-order" @onclick="(() => AscOrder())"> Datum aufsteigend</button>
+                </div>
             </div>
-        }
-    </div>    
-    <div class="col-md-4 col-xl-3 d-none d-md-block">       
-        <div class="categories">
-            <span class="text-uppercase fw-bold">Status</span>
-            <div @onclick='(() => FilterBeigtrags("all"))'>Alles</div>
-            <div @onclick='(() => FilterBeigtrags("completed"))'>Completed</div>
-            <div @onclick='(() => FilterBeigtrags("inprocess"))'>In Process</div>
-            <div @onclick='(() => FilterBeigtrags("upcoming"))'>UpComing</div>
+
+            <div class="col-sm-6">
+                <input type="text" placeholder="Search" aria-label="Search box" class="form-control rounded-control" @oninput="((txt) => OnSearchInput((string)txt.Value))" />
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-10">
+            @if (beitrags == null)
+            {
+                <p>Loading...</p>
+            }
+            else
+            {
+                <div>
+                    @foreach (var beitrag in beitrags)
+                    {
+                        if (beitrag.BeitragStatus == BeitragRdr.DTOs.BeitragStatus.UpComing)
+                        {
+                            <div class="beitrag-entry">
+                                <div class="beitrag-detail" @onclick="(() => OpenDetails(beitrag))">
+                                    <span>Details</span>
+                                </div>
+                                <div class="beitrag-entry-text-title">
+                                    <div class="beibeitrag-entry-text-title">
+                                        <p>@beitrag.Name</p><br>
+                                        <p>@beitrag.PostDate</p>
+                                    </div>
+                                    <div class="beitrag-entry-text-description">
+                                        <p>@beitrag.Description</p>
+                                    </div>
+                                </div>
+                                <div class="beitrag-entry-status-upcoming">
+                                    <span>Upcoming</span>
+                                </div>
+                            </div>
+                        }
+                        else if (beitrag.BeitragStatus == BeitragRdr.DTOs.BeitragStatus.InProcess)
+                        {
+                            <div class="beitrag-entry" @onclick="(() => OpenDetails(beitrag))">
+                                <div class="beitrag-detail">
+                                    <span>Details</span>
+                                </div>
+                                <div class="beitrag-entry-text-title">
+                                    <div class="beibeitrag-entry-text-title">
+                                        <p>@beitrag.Name</p>
+                                        <p>@beitrag.PostDate</p>
+                                    </div>
+                                    <div class="beitrag-entry-text-description">
+                                        <p>@beitrag.Description</p>
+
+                                    </div>
+                                </div>
+                                <div class="beitrag-entry-status-inprocess">
+                                    <span>In Process</span>
+                                </div>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="beitrag-entry" @onclick="(() => OpenDetails(beitrag))">
+                                <div class="beitrag-detail">
+                                    <span>Details</span>
+                                </div>
+                                <div class="beitrag-entry-text-title">
+                                    <div class="beibeitrag-entry-text-title">
+                                        <p>@beitrag.Name</p>
+                                        <p>@beitrag.PostDate</p>
+                                    </div>
+                                    <div class="beitrag-entry-text-description">
+                                        <p>@beitrag.Description</p>
+
+                                    </div>
+                                </div>
+                                <div class="beitrag-entry-status-completed">
+                                    <span>Completed</span>
+                                </div>
+                            </div>
+                        }
+                    }
+                </div>
+            }
+        </div>
+        <div class="col-sm-2 justify-content-center">
+            <div class="categories">
+                <span class="text-uppercase fw-bold">Status</span>
+                <div @onclick='(() => FilterBeigtrags("all"))'>Alles</div>
+                <div @onclick='(() => FilterBeigtrags("completed"))'>Completed</div>
+                <div @onclick='(() => FilterBeigtrags("inprocess"))'>In Process</div>
+                <div @onclick='(() => FilterBeigtrags("upcoming"))'>UpComing</div>
+            </div>
         </div>
     </div>
 </div>

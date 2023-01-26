@@ -4,128 +4,130 @@
 
 <h3>Beitrag erstellen</h3>
 
-<div class="w-25">
-    <Alert @bind-Show="ShowAlert">
-        <span class="oi oi-check mr-2" aria-hidden="true"></span>
-        <strong>Keyword added!</strong>
-    </Alert>
-</div>
+<div class="container">
+    <div class="row justify-content-center">
+        <EditForm Model="@createBeitragDTO" OnValidSubmit="@OnValidSubmit">
+            <DataAnnotationsValidator />
+            <ValidationSummary />
 
-<div class="row justify-content-center w-50">
-    <EditForm Model="@createBeitragDTO" OnValidSubmit="@OnValidSubmit">
-        <DataAnnotationsValidator />   
-        <ValidationSummary/>
+            <div class="create-beitrag-entry">
+                <div class="form-group">
+                    <label>Name:</label>
+                    <InputText id="name" class="form-control" @bind-Value="createBeitragDTO.Name" />
+                </div>
 
-        <div class="create-beitrag-entry">
-            <div class="form-group">
-                <label>Name:</label>               
-                <InputText id="name" class="form-control" @bind-Value="createBeitragDTO.Name" />
+                <div class="form-group">
+                    <label>Description:</label>
+                    <InputText id="desc" class="form-control" @bind-Value="createBeitragDTO.Description" />
+                </div>
+
+                <div class="form-group">
+                    <label>Company:</label>
+                    <InputSelect id="compid" class="form-select" @bind-Value="createBeitragDTO.CompanyId">
+                        @if (companies != null)
+                        {
+                            <option>Select</option>
+                            @foreach (var cnt in companies)
+                            {
+                                <option value="@cnt.Id">@cnt.Name</option>
+                            }
+                        }
+                    </InputSelect>
+                </div>
             </div>
 
-            <div class="form-group">
-                <label>Description:</label>
-                <InputText id="desc" class="form-control" @bind-Value="createBeitragDTO.Description" />
+            <div>
+                <div class="form-group create-beitrag-entry">
+                    <label>Facebook</label>
+                    <div>
+                        <label>Name:</label>
+                        <InputText id="name" class="form-control" @bind-Value="beitragFace.Name" />
+                    </div>
+                    <div>
+                        <label>Description:</label>
+                        <InputText id="name" class="form-control" @bind-Value="beitragFace.Description" />
+                    </div>
+                </div>
+
+                <div class="form-group create-beitrag-entry">
+                    <label>Instagram</label>
+                    <div>
+                        <label>Name:</label>
+                        <InputText id="name" class="form-control" @bind-Value="beitragInsta.Name" />
+                    </div>
+                    <div>
+                        <label>Description:</label>
+                        <InputText id="name" class="form-control" @bind-Value="beitragInsta.Description" />
+                    </div>
+                </div>
+
+                <div class="form-group create-beitrag-entry">
+                    <label>Pinterest</label>
+                    <div>
+                        <label>Name:</label>
+                        <InputText id="name" class="form-control" @bind-Value="beitragPintr.Name" />
+                    </div>
+                    <div>
+                        <label>Description:</label>
+                        <InputText id="name" class="form-control" @bind-Value="beitragPintr.Description" />
+                    </div>
+                </div>
             </div>
 
-            <div class="form-group">
-                <label>Company:</label>
-                <InputSelect id="compid" class="form-control" @bind-Value="createBeitragDTO.CompanyId">
-                    @if (companies != null)
+            @if (tagstoupload.Count != 5)
+            {
+                <div class="row align-items-center create-beitrag-entry">
+                        <label>Tags:</label>
+                        <div class="col">
+                            <input type="text" class="form-control" placeholder="Keyword" @bind="tag.Tag" />
+                            <button class="btn btn-secondary" type="button" style="margin-top: 10px" @onclick="@(() => {AddToTagList(); })">Add to Tags</button>
+                        </div>
+                        <div class="col">
+                            <Alert @bind-Show="ShowAlert" />
+                        </div>
+                </div>
+            }
+
+            @if (tagstoupload.Count != 0 && tagstoupload.Count != 5)
+            {
+                <div class="row form-group create-beitrag-entry justify-content-start">
+                    <div class="row justify-content-start">
+                        <div class="row">
+                            @foreach (var tag in tagstoupload)
+                            {
+                                <Timer TimeInSeconds="2" Tick="@(() => {DissmissAlert();})" />
+                                <div class="col">
+                                    <p class="my-2 text-jusitfy">
+                                        <label>@tag.Tag</label>
+                                    </p>
+                                    <button class="btn btn-danger" type="button" @onclick="@(() => { RemoveTag(tag); })">Remove</button>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>                
+            }
+            @if(tagstoupload.Count == 5)
+            {
+                <div class="row form-group create-beitrag-entry justify-content-start">
+                    @foreach (var tag in tagstoupload)
                     {
-                        @foreach (var cnt in companies)
-                        {
-                            <option value="@cnt.Id">@cnt.Name</option>
-                        }
+                        <div class="col">
+                            <p>
+                                <label>@tag.Tag</label>
+                            </p>
+                            <button class="btn btn-danger" type="button" @onclick="@(() => { RemoveTag(tag); })">Remove</button>
+                        </div>
                     }
-                </InputSelect>
-            </div>
-        </div>
-
-        <div>
-            <div class="form-group create-beitrag-entry">
-                <label>Facebook</label>
-                <div>
-                    <label>Name:</label>
-                    <InputText id="name" class="form-control" @bind-Value="beitragFace.Name" />
-                </div>
-                <div>
-                    <label>Description:</label>
-                    <InputText id="name" class="form-control" @bind-Value="beitragFace.Description" />
-                </div>
-            </div>
-
-            <div class="form-group create-beitrag-entry">
-                <label>Instagram</label>
-                <div>
-                    <label>Name:</label>
-                    <InputText id="name" class="form-control" @bind-Value="beitragInsta.Name" />
-                </div>
-                <div>
-                    <label>Description:</label>
-                    <InputText id="name" class="form-control" @bind-Value="beitragInsta.Description" />
-                </div>
-            </div>
-
-            <div class="form-group create-beitrag-entry">
-                <label>Pinterest</label>
-                <div>
-                    <label>Name:</label>
-                    <InputText id="name" class="form-control" @bind-Value="beitragPintr.Name" />
-                </div>
-                <div>
-                    <label>Description:</label>
-                    <InputText id="name" class="form-control" @bind-Value="beitragPintr.Description" />
-                </div>
-            </div>
-        </div>
-
-        <div class="form-group create-beitrag-entry">
-            <label>Tags:</label>
-            <div class="container w-25">
-                @if(tagstoupload.Count == 0)
-                {
-                    <div style="margin-top: 10px" class="row justify-content-md-center">
-                        <input placeholder="Keyword" @bind="tag.Tag" />
-                        <button class="btn btn-secondary" type="button" style="margin-top: 10px" @onclick="@(() => {AddToTagList(); ToggleAlert(); })">Add to Tags</button>
-                    </div>
-                }
-                @if (tagstoupload.Count != 0 && tagstoupload.Count != 5)
-                {
-                    <div style="margin-top: 10px" class="row justify-content-md-center">
-                        <input placeholder="Keyword" @bind="tag.Tag" />
-                        <button class="btn btn-secondary" type="button" style="margin-top: 10px" @onclick="@(() => {AddToTagList(); ToggleAlert(); })">Add to Tags</button>
-                        @foreach (var tag in tagstoupload)
+                    <div class="col">
+                        @if (tagstoupload.Count >= 5)
                         {
-                            <Timer TimeInSeconds="3" Tick="@(() => {DissmissAlert();})" />
-                            <div class="col col-lg-2">
-                                <p class="my-2 text-jusitfy">
-                                    <label>@tag.Tag</label>
-                                </p>
-                                <button class="btn btn-danger" type="button" @onclick="@(() => { RemoveTag(tag); })">Remove</button>
-                            </div>
+                            <p>Max. 5 keywords</p>
                         }
                     </div>
-                }
-                else
-                {
-                    <div class="row justify-content-md-center">
-                        @foreach (var tag in tagstoupload)
-                        {
-                            <div class="col col-lg-2">
-                                <p class="my-2 text-jusitfy">
-                                    <label>@tag.Tag</label>
-                                </p>
-                                <button class="btn btn-danger" type="button" @onclick="@(() => { RemoveTag(tag); })">Remove</button>
-                            </div>
-                        }
-                    </div>
-
-                    <p class="my-2 text-jusitfy">
-                        <strong>Max. 5 keywords</strong>
-                    </p>
-                }
-            </div>
-        </div>
-        <button class="btn btn-success btn-lg btn-block" style="margin-top: 10px" type="submit">Submit</button>
-    </EditForm>
+                </div>
+            }
+            <button class="btn btn-success btn-lg btn-block" style="margin-top: 10px" type="submit">Submit</button>
+        </EditForm>
+    </div>
 </div>
