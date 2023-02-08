@@ -72,6 +72,12 @@
                         <InputText id="name" class="form-control" @bind-Value="beitragPintr.Description" />
                     </div>
                 </div>
+                <div class="form-group create-beitrag-entry">
+                    <label>Post date</label>
+                    <div>
+                        <InputDate id="postdate" class="form-control" @bind-Value="createBeitragDTO.PostDate" />
+                    </div>
+                </div>
             </div>
 
             @if (tagstoupload.Count != 5)

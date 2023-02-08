@@ -1,5 +1,6 @@
 ﻿using BeitragRdr.DTOs;
 using BeitragRdr.DTOs.CompanyDTOs;
+using BeitragRdr.Models;
 using BeitragRdrBlazorServerApp.Policies;
 using System.Collections.ObjectModel;
 using System.Security.Policy;
@@ -56,6 +57,22 @@ namespace BeitragRdrBlazorServerApp.Data
             response.EnsureSuccessStatusCode();
 
             return await response.Content.ReadFromJsonAsync<List<CompanyReadDTO>>();
+        }
+
+        public async Task UpdateBeitrag(int id, BeitragDTO beitragDTO)
+        {
+            var response = await policies.ImmediateHttpRetry.ExecuteAsync(
+                        () => httpClientFactory.CreateClient("base").PutAsJsonAsync($"/api/v1/Beitrag/UpdateBeitrag/{id}", beitragDTO));
+
+            response.EnsureSuccessStatusCode();
+        }
+
+        public async Task DeleteBeitrag(int id)
+        {
+            var response = await policies.ImmediateHttpRetry.ExecuteAsync(
+                        () => httpClientFactory.CreateClient("base").DeleteAsync($"/api/v1/Beitrag/DeleteBeitrag/{id}"));
+
+            response.EnsureSuccessStatusCode();
         }
     }
 }

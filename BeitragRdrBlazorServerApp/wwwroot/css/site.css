@@ -14,11 +14,11 @@ a, .btn-link {
     color: #d4f4dd;
 }
 
-.btn-primary {   
+/*.btn-primary {   
     color: #d4f4dd;
     background-color: #d4f4dd;
     border-color: #d4f4dd;
-}
+}*/
 
 .btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
     box-shadow: 0 0 0 0.1rem #d4f4dd, 0 0 0 0.25rem #d4f4dd;

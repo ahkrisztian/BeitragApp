@@ -12,5 +12,9 @@ namespace BeitragRdrBlazorServerApp.Data
         Task<BeitragDTO> CreateBeitrag(CreateBeitragDTO createBeitragDTO);
 
         Task<List<CompanyReadDTO>> Companies();
+
+        Task UpdateBeitrag(int id, BeitragDTO beitragDTO);
+
+        Task DeleteBeitrag(int id);
     }
 }

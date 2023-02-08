@@ -23,6 +23,10 @@ namespace BeitragRdr.DTOs
         public virtual BeitragFaceDTO? beitragFace { get; set; }
         public virtual BeitragPintrDTO? beitragPintr { get; set; }
 
+        public DateTime? CreatedDate { get; set; } = DateTime.Now;
+
+        public DateTime? PostDate { get; set; }
+
         [Required]
         [Range(1, int.MaxValue, ErrorMessage = "Please select a Company")]
         public int CompanyId { get; set; }

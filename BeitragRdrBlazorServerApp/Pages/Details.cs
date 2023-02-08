@@ -13,11 +13,28 @@ namespace BeitragRdrBlazorServerApp.Pages
         [Inject]
         private IHttpDataAccess dataAccess { get; set; }
 
-        private BeitragDTO beitragDTO;
+        private BeitragDTO? beitragDTO;
 
         protected async override Task OnInitializedAsync()
         {
             beitragDTO = await dataAccess.BeitragById(Convert.ToInt32(Id));
         }     
+
+        private void Back()
+        {
+            navManager.NavigateTo("/");
+        }
+
+        private void Edit(BeitragDTO beitrag)
+        {
+            navManager.NavigateTo($"/Update/{beitrag.Id}");
+        }
+
+        private void Delete(BeitragDTO beitrag)
+        {
+            dataAccess.DeleteBeitrag(beitrag.Id);
+
+            navManager.NavigateTo("/");
+        }
     }
 }

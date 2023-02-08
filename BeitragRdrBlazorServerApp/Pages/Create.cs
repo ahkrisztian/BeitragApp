@@ -25,7 +25,7 @@ namespace BeitragRdrBlazorServerApp.Pages
 
         private BeitragPintrDTO beitragPintr { get; set; } = new BeitragPintrDTO();
 
-        private List<CompanyReadDTO> companies { get; set; } = new List<CompanyReadDTO>();
+        private List<CompanyReadDTO>? companies { get; set; }
         public TagsDTO tag { get; set; } = new TagsDTO();
         public ObservableCollection<TagsDTO> tagstoupload { get; set; } = new ObservableCollection<TagsDTO>();
 
@@ -46,8 +46,6 @@ namespace BeitragRdrBlazorServerApp.Pages
         protected override async Task OnInitializedAsync()
         {
             companies = await dataAccess.Companies();
-
-            await base.OnInitializedAsync();
         }
 
         protected async Task OnValidSubmit()

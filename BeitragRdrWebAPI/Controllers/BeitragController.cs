@@ -4,6 +4,7 @@ using BeitragRdr.DTOs;
 using BeitragRdr.DTOs.CompanyDTOs;
 using BeitragRdr.Models;
 using BeitragRdrDataAccessLibrary.Repo;
+using Elfie.Serialization;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -284,14 +285,30 @@ namespace BeitragRdrWebAPI.Controllers
         {
             var beitragmodel = await beitragRepo.GetBeitragById(id);
 
-            if(beitragmodel == null)
+            if (beitragmodel == null)
             {
                 logger.LogInformation("UpdateBeitrag was called and returned NotFound404");
                 return NotFound();
             }
 
+            if (beitrag.beitragFace is null)
+            {
+                beitragmodel.beitragFace = null;
+            }
+
+            if (beitrag.beitragInsta is null)
+            {
+                beitragmodel.beitragInsta = null;
+            }
+
+            if (beitrag.beitragPintr is null)
+            {
+                beitragmodel.beitragPintr = null;
+            }
+
             mapper.Map(beitrag, beitragmodel);
 
+            
             beitragRepo.UpdateBeitrag(beitragmodel);
 
             logger.LogInformation("UpdateBeitrag was called and returned NoContent204");

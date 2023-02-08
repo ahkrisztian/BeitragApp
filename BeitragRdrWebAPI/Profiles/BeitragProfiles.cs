@@ -8,6 +8,7 @@ using BeitragRdr.Models.Address;
 using BeitragRdr.Models.CompanyModel;
 using BeitragRdr.Models.ImageModels;
 using BeitragRdr.Models.SubModels;
+using Elfie.Serialization;
 
 namespace BeitragRdrWebAPI.Profiles
 {
@@ -19,6 +20,7 @@ namespace BeitragRdrWebAPI.Profiles
             //Read the Beitrags
 
             CreateMap<Beitrag, BeitragDTO>();
+
             CreateMap<Tags, TagsDTO>();
             CreateMap<BeitragFace, BeitragFaceDTO>();
             CreateMap<BeitragInsta, BeitragInstaDTO>();
@@ -36,7 +38,8 @@ namespace BeitragRdrWebAPI.Profiles
             CreateMap<CreateBeitragDTO, Beitrag>();
 
             //Create the Beitrag
-            CreateMap<BeitragDTO, Beitrag>();
+            CreateMap<BeitragDTO, Beitrag>(); ;
+
             CreateMap<TagsDTO, Tags>();
             CreateMap<BeitragFaceDTO, BeitragFace>();
             CreateMap<BeitragInstaDTO, BeitragInsta>();
@@ -44,6 +47,7 @@ namespace BeitragRdrWebAPI.Profiles
             CreateMap<ImageModelFacebookDTO, ImageModelFacebook>();
             CreateMap<ImageModelInstagramDTO, ImageModelInstagram>();
             CreateMap<ImageModelPintrDTO, ImageModelPintr>();
+
         }
     }
 }

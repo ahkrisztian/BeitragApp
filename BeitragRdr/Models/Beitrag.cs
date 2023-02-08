@@ -32,7 +32,7 @@ public class Beitrag : IBaseModel
     public virtual Company company { get; set; }
     public virtual List<Tags>? tags { get; set; } = new List<Tags>();
     public string? CreatedByUserId { get; set; }
-    public DateTime? CreatedDate { get; set; } = DateTime.Now;
+    public DateTime? CreatedDate { get; set; }
     public string? LastModifiedUserId { get; set; }
     public DateTime? LastModifiedDate { get; set; }
 
