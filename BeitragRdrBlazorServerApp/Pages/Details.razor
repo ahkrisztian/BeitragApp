@@ -79,9 +79,15 @@
                 <div>@beitragDTO.BeitragStatus</div>
             </div>
             <div class="row">
-                <div class="col-11">
+                <div class="col-10">
                     <button class="btn btn-primary" @onclick="(() => Back())">Back</button>
-                    <button class="btn btn-secondary" @onclick="(() => Edit(beitragDTO))">Edit</button>
+                    <button class="btn btn-secondary" @onclick="(() => Edit(beitragDTO))">Edit</button>                   
+                </div>
+                <div class="col-1">
+                    @if(beitragDTO.BeitragStatus == BeitragRdr.DTOs.BeitragStatus.Freigabe)
+                    {
+                       <button class="btn btn-secondary" @onclick="(() => Frei())">Freigeben</button>
+                    }
                 </div>
                 <div class="col-1">
                     <button class="btn btn-danger" @onclick="(() => Delete(beitragDTO))">Delete</button>

@@ -159,14 +159,14 @@ a, .btn-link {
 }
 
 
-.beitrag-entry-status-completed {
+.beitrag-entry-status-veroffentlicht {
     text-align: center;
     writing-mode: vertical-rl;
     text-orientation: mixed;
-    border-right: 3px #0e7c7b solid;
+    border-right: 3px #60d394 solid;
     border-top-right-radius: 15px;
     border-bottom-right-radius: 15px;
-    background-color: #0e7c7b;
+    background-color: #60d394;
     color: #d4f4dd;
     display: flex;
     flex-flow: column;
@@ -178,14 +178,33 @@ a, .btn-link {
     cursor: default;
 }
 
-.beitrag-entry-status-inprocess {
+.beitrag-entry-status-geplant {
     text-align: center;
     writing-mode: vertical-rl;
     text-orientation: mixed;
-    border-right: 3px #d62246 solid;
+    border-right: 3px #aaf683 solid;
     border-top-right-radius: 15px;
     border-bottom-right-radius: 15px;
-    background-color: #d62246;
+    background-color: #aaf683;
+    color: #4b1d3f;
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+    font-family: 'Bauhaus 93' sans-serif;
+    font-weight: 700;
+    font-size: 0.8rem;
+    min-height: 142px;
+    cursor: default;
+}
+
+.beitrag-entry-status-freigabe {
+    text-align: center;
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+    border-right: 3px #ff9b85 solid;
+    border-top-right-radius: 15px;
+    border-bottom-right-radius: 15px;
+    background-color: #ff9b85;
     color: #d4f4dd;
     display: flex;
     flex-flow: column;
@@ -197,14 +216,14 @@ a, .btn-link {
     cursor: default;
 }
 
-.beitrag-entry-status-upcoming {
+.beitrag-entry-status-entwurf {
     text-align: center;
     writing-mode: vertical-rl;
     text-orientation: mixed;
-    border-right: 3px #ffe900 solid;
+    border-right: 3px #4c5c68 solid;
     border-top-right-radius: 15px;
     border-bottom-right-radius: 15px;
-    background-color: #ffe900;
+    background-color: #4c5c68;
     color: #d4f4dd;
     display: flex;
     flex-flow: column;

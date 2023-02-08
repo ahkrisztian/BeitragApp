@@ -37,7 +37,7 @@
                 <div>
                     @foreach (var beitrag in beitrags)
                     {
-                        if (beitrag.BeitragStatus == BeitragRdr.DTOs.BeitragStatus.UpComing)
+                        if (beitrag.BeitragStatus == BeitragRdr.DTOs.BeitragStatus.Entwurf)
                         {
                             <div class="beitrag-entry">
                                 <div class="beitrag-detail" @onclick="(() => OpenDetails(beitrag))">
@@ -52,15 +52,15 @@
                                         <p>@beitrag.Description</p>
                                     </div>
                                 </div>
-                                <div class="beitrag-entry-status-upcoming">
-                                    <span>Upcoming</span>
+                                <div class="beitrag-entry-status-entwurf">
+                                    <span>Entwurf</span>
                                 </div>
                             </div>
                         }
-                        else if (beitrag.BeitragStatus == BeitragRdr.DTOs.BeitragStatus.InProcess)
+                        else if (beitrag.BeitragStatus == BeitragRdr.DTOs.BeitragStatus.Freigabe)
                         {
-                            <div class="beitrag-entry" @onclick="(() => OpenDetails(beitrag))">
-                                <div class="beitrag-detail">
+                            <div class="beitrag-entry">
+                                <div class="beitrag-detail" @onclick="(() => OpenDetails(beitrag))">
                                     <span>Details</span>
                                 </div>
                                 <div class="beitrag-entry-text-title">
@@ -73,15 +73,36 @@
 
                                     </div>
                                 </div>
-                                <div class="beitrag-entry-status-inprocess">
-                                    <span>In Process</span>
+                                <div class="beitrag-entry-status-freigabe">
+                                    <span>Wartet auf Freigabe</span>
+                                </div>
+                            </div>
+                        }
+                        else if (beitrag.BeitragStatus == BeitragRdr.DTOs.BeitragStatus.Geplant)
+                        {
+                            <div class="beitrag-entry">
+                                <div class="beitrag-detail" @onclick="(() => OpenDetails(beitrag))">
+                                    <span>Details</span>
+                                </div>
+                                <div class="beitrag-entry-text-title">
+                                    <div class="beibeitrag-entry-text-title">
+                                        <p>@beitrag.Name</p>
+                                        <p>@beitrag.PostDate</p>
+                                    </div>
+                                    <div class="beitrag-entry-text-description">
+                                        <p>@beitrag.Description</p>
+
+                                    </div>
+                                </div>
+                                <div class="beitrag-entry-status-geplant">
+                                    <span>Geplant</span>
                                 </div>
                             </div>
                         }
                         else
                         {
-                            <div class="beitrag-entry" @onclick="(() => OpenDetails(beitrag))">
-                                <div class="beitrag-detail">
+                            <div class="beitrag-entry">
+                                <div class="beitrag-detail" @onclick="(() => OpenDetails(beitrag))">
                                     <span>Details</span>
                                 </div>
                                 <div class="beitrag-entry-text-title">
@@ -94,8 +115,8 @@
 
                                     </div>
                                 </div>
-                                <div class="beitrag-entry-status-completed">
-                                    <span>Completed</span>
+                                <div class="beitrag-entry-status-veroffentlicht">
+                                    <span>Veröffentlicht</span>
                                 </div>
                             </div>
                         }
@@ -107,9 +128,10 @@
             <div class="categories">
                 <span class="text-uppercase fw-bold">Status</span>
                 <div @onclick='(() => FilterBeigtrags("all"))'>Alles</div>
-                <div @onclick='(() => FilterBeigtrags("completed"))'>Completed</div>
-                <div @onclick='(() => FilterBeigtrags("inprocess"))'>In Process</div>
-                <div @onclick='(() => FilterBeigtrags("upcoming"))'>UpComing</div>
+                <div @onclick='(() => FilterBeigtrags("entwurf"))'>Entwürfe</div>
+                <div @onclick='(() => FilterBeigtrags("freigabe"))'>Warten auf die Freigabe</div>
+                <div @onclick='(() => FilterBeigtrags("geplant"))'>Geplante</div>
+                <div @onclick='(() => FilterBeigtrags("veröffentlicht"))'>Veröffentlicht</div>
             </div>
         </div>
     </div>

@@ -1,6 +1,7 @@
 ﻿using BeitragRdr.DTOs;
 using BeitragRdrBlazorServerApp.Data;
 using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.JsonPatch;
 using System.Configuration;
 
 namespace BeitragRdrBlazorServerApp.Pages
@@ -33,6 +34,16 @@ namespace BeitragRdrBlazorServerApp.Pages
         private void Delete(BeitragDTO beitrag)
         {
             dataAccess.DeleteBeitrag(beitrag.Id);
+
+            navManager.NavigateTo("/");
+        }
+
+        private void Frei()
+        {
+            var patchDoc = new JsonPatchDocument<BeitragDTO>();
+            patchDoc.Replace(e => e.BeitragStatus.Value, BeitragStatus.Geplant);
+
+            dataAccess.PartialUpdateBeitrag(beitragDTO.Id, patchDoc);
 
             navManager.NavigateTo("/");
         }

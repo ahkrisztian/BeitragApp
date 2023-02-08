@@ -8,9 +8,10 @@ namespace BeitragRdr.Models;
 
 public enum BeitragStatus
 {
-    Complete = 0,
-    InProcess = 1,
-    UpComing = 2
+    Entwurf = 0,
+    Freigabe = 1,
+    Geplant = 2,
+    Veröffentlicht = 3
 }
 public class Beitrag : IBaseModel
 {
@@ -39,5 +40,5 @@ public class Beitrag : IBaseModel
     public DateTime? PostDate {get; set; }
 
     public DateTime? PostedDate { get; set; }
-    public BeitragStatus? BeitragStatus { get; set; } = Models.BeitragStatus.InProcess;
+    public BeitragStatus? BeitragStatus { get; set; } = Models.BeitragStatus.Entwurf;
 }

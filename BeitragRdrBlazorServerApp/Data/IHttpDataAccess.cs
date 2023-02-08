@@ -1,5 +1,6 @@
 ﻿using BeitragRdr.DTOs;
 using BeitragRdr.DTOs.CompanyDTOs;
+using Microsoft.AspNetCore.JsonPatch;
 
 namespace BeitragRdrBlazorServerApp.Data
 {
@@ -16,5 +17,7 @@ namespace BeitragRdrBlazorServerApp.Data
         Task UpdateBeitrag(int id, BeitragDTO beitragDTO);
 
         Task DeleteBeitrag(int id);
+
+        Task PartialUpdateBeitrag(int id, JsonPatchDocument<BeitragDTO> patchDocument);
     }
 }

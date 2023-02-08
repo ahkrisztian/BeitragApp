@@ -2,8 +2,11 @@
 using BeitragRdr.DTOs.CompanyDTOs;
 using BeitragRdr.Models;
 using BeitragRdrBlazorServerApp.Policies;
+using Microsoft.AspNetCore.JsonPatch;
+using Newtonsoft.Json;
 using System.Collections.ObjectModel;
 using System.Security.Policy;
+using System.Text;
 
 namespace BeitragRdrBlazorServerApp.Data
 {
@@ -71,6 +74,17 @@ namespace BeitragRdrBlazorServerApp.Data
         {
             var response = await policies.ImmediateHttpRetry.ExecuteAsync(
                         () => httpClientFactory.CreateClient("base").DeleteAsync($"/api/v1/Beitrag/DeleteBeitrag/{id}"));
+
+            response.EnsureSuccessStatusCode();
+        }
+
+        public async Task PartialUpdateBeitrag(int id, JsonPatchDocument<BeitragDTO> patchDocument)
+        {
+            var serializedDoc = JsonConvert.SerializeObject(patchDocument);
+            var requestContent = new StringContent(serializedDoc, Encoding.UTF8, "application/json-patch+json");
+
+            var response = await policies.ImmediateHttpRetry.ExecuteAsync(
+                        () => httpClientFactory.CreateClient("base").PatchAsync($"/api/v1/Beitrag/PartialBeitragUpdate/{id}", requestContent));
 
             response.EnsureSuccessStatusCode();
         }

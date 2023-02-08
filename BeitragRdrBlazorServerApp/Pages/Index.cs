@@ -39,22 +39,27 @@ namespace BeitragRdrBlazorServerApp.Pages
 
             List<BeitragDTO> allbeitrags = output.ToList().Where(x => x.Name.ToLower().Contains(search.ToLower())).ToList();
 
-            if (filter == "completed")
+            if (filter == "entwurf")
             {
-                beitrags = new ObservableCollection<BeitragDTO>(allbeitrags.Where(x => x.BeitragStatus == BeitragStatus.Complete).ToList());
+                beitrags = new ObservableCollection<BeitragDTO>(allbeitrags.Where(x => x.BeitragStatus == BeitragStatus.Entwurf).ToList());
             }
 
-            if(filter == "inprocess")
+            if(filter == "freigabe")
             {
-                beitrags = new ObservableCollection<BeitragDTO>(allbeitrags.Where(x => x.BeitragStatus == BeitragStatus.InProcess).ToList());
+                beitrags = new ObservableCollection<BeitragDTO>(allbeitrags.Where(x => x.BeitragStatus == BeitragStatus.Freigabe).ToList());
             }
 
-            if(filter == "upcoming")
+            if(filter == "geplant")
             {
-                beitrags = new ObservableCollection<BeitragDTO>(allbeitrags.Where(x => x.BeitragStatus == BeitragStatus.UpComing).ToList());
+                beitrags = new ObservableCollection<BeitragDTO>(allbeitrags.Where(x => x.BeitragStatus == BeitragStatus.Geplant).ToList());
             }
 
-            if( filter == "all")
+            if (filter == "veröffentlicht")
+            {
+                beitrags = new ObservableCollection<BeitragDTO>(allbeitrags.Where(x => x.BeitragStatus == BeitragStatus.Veröffentlicht).ToList());
+            }
+
+            if ( filter == "all")
             {
                 beitrags = new ObservableCollection<BeitragDTO>(allbeitrags.ToList());
             }
