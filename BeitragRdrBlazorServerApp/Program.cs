@@ -1,7 +1,11 @@
 using BeitragRdrBlazorServerApp.Data;
 using BeitragRdrBlazorServerApp.Policies;
+using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
+using Microsoft.AspNetCore.Rewrite;
+using Microsoft.Identity.Web;
+using Microsoft.Identity.Web.UI;
 
 namespace BeitragRdrBlazorServerApp
 {
@@ -13,10 +17,18 @@ namespace BeitragRdrBlazorServerApp
 
             // Add services to the container.
             builder.Services.AddRazorPages();
-            builder.Services.AddServerSideBlazor();
+
+            builder.Services.AddServerSideBlazor().AddMicrosoftIdentityConsentHandler();
+
+            builder.Services.AddControllersWithViews().AddMicrosoftIdentityUI();
+
 
             builder.Services.AddSingleton<ClientPolicies>(new ClientPolicies());
-            
+
+            //builder.Services.AddVersionedApiExplorer().AddMicrosoftIdentityConsentHandler();
+
+            builder.Services.AddApiVersioning();
+
 
             //builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.Configuration["api_base_url"]) });
 
@@ -27,6 +39,19 @@ namespace BeitragRdrBlazorServerApp
             });
 
             builder.Services.AddScoped<IHttpDataAccess, HttpDataAccess>();
+
+            
+
+            builder.Services.AddAuthentication(OpenIdConnectDefaults.AuthenticationScheme)
+                .AddMicrosoftIdentityWebApp(builder.Configuration.GetSection("AzureAdB2C"));
+
+            builder.Services.AddAuthorization(opt =>
+            {
+                opt.AddPolicy("Admin", policy =>
+                {
+                    policy.RequireClaim("jobTitle", "Admin");
+                });
+            });
 
             var app = builder.Build();
 
@@ -44,8 +69,26 @@ namespace BeitragRdrBlazorServerApp
 
             app.UseRouting();
 
+            app.UseAuthentication();
+            app.UseAuthorization();
+
+            app.UseRewriter(
+                new RewriteOptions().Add(
+                    context =>
+                    {
+                        if(context.HttpContext.Request.Path == "/MicrosoftIdentity/Account/SignedOut")
+                        {
+                            context.HttpContext.Response.Redirect("/");
+                        }
+                    }
+                    ));
+
+            
+
             app.MapBlazorHub();
             app.MapFallbackToPage("/_Host");
+
+            app.MapControllers();
 
             app.Run();
         }

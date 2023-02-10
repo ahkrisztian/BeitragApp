@@ -1,10 +1,12 @@
 ﻿using BeitragRdr.DTOs;
 using BeitragRdr.DTOs.CompanyDTOs;
 using BeitragRdr.Models;
+using BeitragRdr.Models.UserModel;
 using BeitragRdrBlazorServerApp.Policies;
 using Microsoft.AspNetCore.JsonPatch;
 using Newtonsoft.Json;
 using System.Collections.ObjectModel;
+using System.Net.Http.Json;
 using System.Security.Policy;
 using System.Text;
 
@@ -87,6 +89,25 @@ namespace BeitragRdrBlazorServerApp.Data
                         () => httpClientFactory.CreateClient("base").PatchAsync($"/api/v1/Beitrag/PartialBeitragUpdate/{id}", requestContent));
 
             response.EnsureSuccessStatusCode();
+        }
+
+        public async Task<UserReadDTO> GetUserByObjectId(string objectId)
+        {
+            var response = await policies.ImmediateHttpRetry.ExecuteAsync(
+                        () => httpClientFactory.CreateClient("base").GetAsync($"/api/v1/User/GetUserByObjectId/{objectId}"));
+
+            return await response.Content.ReadFromJsonAsync<UserReadDTO>();
+        }
+
+        public async Task<UserReadDTO> CreateUser(UserCreateDTO createUser)
+        {
+            var response = await policies.ImmediateHttpRetry.ExecuteAsync(
+                        () => httpClientFactory.CreateClient("base").PostAsJsonAsync("/api/v1/User/CreateUser/", createUser));
+
+            response.EnsureSuccessStatusCode();
+
+            return await response.Content.ReadFromJsonAsync<UserReadDTO>();
+
         }
     }
 }

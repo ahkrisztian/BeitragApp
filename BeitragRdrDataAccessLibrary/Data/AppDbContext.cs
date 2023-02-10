@@ -48,12 +48,5 @@ namespace BeitragRdrDataAccessLibrary.Data
         {
             base.OnModelCreating(modelBuilder);
         }
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            if (!optionsBuilder.IsConfigured)
-            {           
-                optionsBuilder.UseSqlite("Filename=Beitrag.db");
-            }
-        }
     }
 }

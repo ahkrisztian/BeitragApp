@@ -2,8 +2,10 @@
 using BeitragRdr.DTOs.CompanyDTOs;
 using BeitragRdr.DTOs.ImageModelsDTOs;
 using BeitragRdr.DTOs.SubModelsDTOs;
+using BeitragRdr.Models.UserModel;
 using BeitragRdrBlazorServerApp.Data;
 using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Authorization;
 using System.Collections.ObjectModel;
 
 namespace BeitragRdrBlazorServerApp.Pages
@@ -11,7 +13,12 @@ namespace BeitragRdrBlazorServerApp.Pages
     public partial class Create
     {
         [Inject]
-        private IHttpDataAccess dataAccess { get; set; }     
+        private IHttpDataAccess dataAccess { get; set; }
+
+        [Inject]
+        private AuthenticationStateProvider authProvider { get; set; }
+
+        private UserReadDTO loggedInUser;
         private CreateBeitragDTO createBeitragDTO { get; set; } = new CreateBeitragDTO() 
         {
             beitragFace = new BeitragFaceDTO(),
@@ -45,6 +52,9 @@ namespace BeitragRdrBlazorServerApp.Pages
 
         protected override async Task OnInitializedAsync()
         {
+            
+            loggedInUser = await authProvider.GetUserFromAuth(dataAccess);
+
             companies = await dataAccess.Companies();
         }
 

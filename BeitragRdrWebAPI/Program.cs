@@ -1,7 +1,7 @@
-
 using BeitragRdrDataAccessLibrary.Data;
 using BeitragRdrDataAccessLibrary.JsonDocFilter;
 using BeitragRdrDataAccessLibrary.Repo;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
@@ -26,13 +26,22 @@ namespace BeitragRdrWebAPI
             builder.Services.AddControllers().AddJsonOptions(x =>
                 x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
 
+            builder.Services.AddControllers()
+            .AddNewtonsoftJson(options =>
+                  options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+               );
+
+
+
             builder.Services.AddScoped<IBeitragRepo, BeitragRepo>();
+            builder.Services.AddScoped<IUserRepo, UserRepo>();
 
             builder.Services.AddDbContext<AppDbContext>(opt => opt.UseSqlite(builder.Configuration.GetConnectionString("Default")));
 
             builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
             builder.Services.AddControllers();
+
 
             builder.Services.AddControllers().AddNewtonsoftJson(s =>
             {
@@ -62,7 +71,13 @@ namespace BeitragRdrWebAPI
 
                 opts.DocumentFilter<JsonPatchDocumentFilter>();
             });
-            
+
+            //builder.Services.AddAuthorization(opt =>
+            //{
+            //    opt.FallbackPolicy = new AuthorizationPolicyBuilder()
+            //    .RequireAuthenticatedUser()
+            //    .Build();
+            //});
 
             builder.Services.AddApiVersioning(opts =>
             {
@@ -95,7 +110,7 @@ namespace BeitragRdrWebAPI
 
             app.UseHttpsRedirection();
 
-            app.UseAuthorization();
+            //app.UseAuthorization();
 
 
             app.MapControllers();

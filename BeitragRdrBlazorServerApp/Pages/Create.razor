@@ -1,4 +1,5 @@
 ﻿@page "/Create"
+@attribute [Authorize(Policy = "Admin")]
 @using BeitragRdrBlazorServerApp.Data
 @inject NavigationManager navManager
 

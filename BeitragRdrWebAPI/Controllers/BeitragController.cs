@@ -1,13 +1,10 @@
 ﻿using AutoMapper;
-using Azure;
 using BeitragRdr.DTOs;
 using BeitragRdr.DTOs.CompanyDTOs;
 using BeitragRdr.Models;
 using BeitragRdrDataAccessLibrary.Repo;
-using Elfie.Serialization;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 
 namespace BeitragRdrWebAPI.Controllers
@@ -463,5 +460,6 @@ namespace BeitragRdrWebAPI.Controllers
             logger.LogWarning("GetCompaniesgot called, Bad Request was returned 400");
             return BadRequest();
         }
+
     }
 }

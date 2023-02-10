@@ -8,6 +8,7 @@ using BeitragRdr.Models.Address;
 using BeitragRdr.Models.CompanyModel;
 using BeitragRdr.Models.ImageModels;
 using BeitragRdr.Models.SubModels;
+using BeitragRdr.Models.UserModel;
 using Elfie.Serialization;
 
 namespace BeitragRdrWebAPI.Profiles
@@ -47,6 +48,11 @@ namespace BeitragRdrWebAPI.Profiles
             CreateMap<ImageModelFacebookDTO, ImageModelFacebook>();
             CreateMap<ImageModelInstagramDTO, ImageModelInstagram>();
             CreateMap<ImageModelPintrDTO, ImageModelPintr>();
+
+            //User profiles
+            CreateMap<User, UserReadDTO>();
+            CreateMap<User, UserCreateDTO>();
+            CreateMap<UserCreateDTO, User>();
 
         }
     }

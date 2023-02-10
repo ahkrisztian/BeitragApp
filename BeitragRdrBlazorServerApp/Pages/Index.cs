@@ -1,7 +1,12 @@
 ﻿using BeitragRdr.DTOs;
+using BeitragRdr.DTOs.CompanyDTOs;
+using BeitragRdr.Models.UserModel;
 using BeitragRdrBlazorServerApp.Data;
 using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Authorization;
+using Microsoft.DotNet.Scaffolding.Shared;
 using System.Collections.ObjectModel;
+using System.Security.Cryptography.Pkcs;
 
 namespace BeitragRdrBlazorServerApp.Pages
 {
@@ -10,18 +15,52 @@ namespace BeitragRdrBlazorServerApp.Pages
         [Inject]
         private IHttpDataAccess dataAccess { get; set; }
 
+        [Inject]
+        private AuthenticationStateProvider authProvider { get; set; }
+
+        private UserReadDTO loggedInUser;
+
         private ObservableCollection<BeitragDTO>? beitrags;
+
+        private List<CompanyReadDTO> companies;
 
         private string search = "";
         protected override async Task OnInitializedAsync()
         {
-            var allbeitrags = await dataAccess.Beitrags();
+            loggedInUser = await authProvider.GetUserFromAuth(dataAccess);
 
-            beitrags = new ObservableCollection<BeitragDTO>(allbeitrags.OrderByDescending(x => x.PostDate).ToList());
+            if(loggedInUser.companies.Count > 0)
+            {
+                companies = loggedInUser.companies;
+
+                beitrags = new ObservableCollection<BeitragDTO>(companies.FirstOrDefault().beitrags.OrderByDescending(x => x.PostDate).ToList());
+            }
 
 
-            base.OnInitializedAsync();
+            var authState = await authProvider.GetAuthenticationStateAsync();
+            string objectId = authState.User.Claims.FirstOrDefault(c => c.Type.Contains("objectidentifier"))?.Value;
+
+            if (string.IsNullOrWhiteSpace(objectId) == false)
+            {
+                
+                loggedInUser = await dataAccess.GetUserByObjectId(objectId) ?? new();
+
+                if(loggedInUser.Id == 0)
+                {
+                    UserCreateDTO userCreateDTO = new UserCreateDTO()
+                    {
+                        FirstName = authState.User.Claims.FirstOrDefault(c => c.Type.Contains("givenname"))?.Value,
+                        LastName = authState.User.Claims.FirstOrDefault(c => c.Type.Contains("surname"))?.Value,
+                        DisplayName = authState.User.Claims.FirstOrDefault(c => c.Type.Equals("name"))?.Value,
+                        EmailAddress = authState.User.Claims.FirstOrDefault(c => c.Type.Contains("email"))?.Value,
+                        ObjectIdentifier = objectId
+                    };
+
+                    dataAccess.CreateUser(userCreateDTO);
+                }              
+            }
         }
+
 
         private async Task DescOrder()
         {
@@ -35,7 +74,7 @@ namespace BeitragRdrBlazorServerApp.Pages
 
         private async Task FilterBeigtrags(string filter)
         {
-            var output = await dataAccess.Beitrags();
+            var output = companies.FirstOrDefault().beitrags;
 
             List<BeitragDTO> allbeitrags = output.ToList().Where(x => x.Name.ToLower().Contains(search.ToLower())).ToList();
 

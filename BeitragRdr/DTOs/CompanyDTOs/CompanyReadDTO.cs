@@ -1,4 +1,5 @@
-﻿using BeitragRdr.Models.Address;
+﻿using BeitragRdr.Models;
+using BeitragRdr.Models.Address;
 using BeitragRdr.Models.UserModel;
 using System;
 using System.Collections.Generic;
@@ -19,5 +20,7 @@ namespace BeitragRdr.DTOs.CompanyDTOs
         public List<AddressReadDTO> addresses { get; set; } = new List<AddressReadDTO>();
 
         public List<PhoneNumberReadDTO> phoneNumbers { get; set; } = new List<PhoneNumberReadDTO>();
+
+        public List<BeitragDTO> beitrags { get; set; } = new List<BeitragDTO>();
     }
 }
