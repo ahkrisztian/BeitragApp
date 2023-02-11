@@ -90,9 +90,11 @@
                        <button class="btn btn-secondary" @onclick="(() => Frei())">Freigeben</button>
                     }
                 </div>
-                <div class="col-1">
-                    <button class="btn btn-danger" @onclick="(() => Delete(beitragDTO))">Delete</button>
-                </div>               
+                <AuthorizeView Policy="Admin">
+                    <div class="col-1">
+                        <button class="btn btn-danger" @onclick="(() => Delete(beitragDTO))">Delete</button>
+                    </div>
+                </AuthorizeView>             
             </div>
         </div>
     </div>

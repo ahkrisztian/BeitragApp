@@ -51,6 +51,10 @@ namespace BeitragRdrBlazorServerApp
                 {
                     policy.RequireClaim("jobTitle", "Admin");
                 });
+                opt.AddPolicy("Customer", policy =>
+                {
+                    policy.RequireClaim("jobTitle", "Customer");
+                });
             });
 
             var app = builder.Build();

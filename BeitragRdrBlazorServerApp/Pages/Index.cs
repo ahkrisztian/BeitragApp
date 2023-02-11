@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.DotNet.Scaffolding.Shared;
 using System.Collections.ObjectModel;
+using System.Runtime.CompilerServices;
 using System.Security.Cryptography.Pkcs;
 
 namespace BeitragRdrBlazorServerApp.Pages
@@ -20,25 +21,39 @@ namespace BeitragRdrBlazorServerApp.Pages
 
         private UserReadDTO loggedInUser;
 
-        private ObservableCollection<BeitragDTO>? beitrags;
+        private ObservableCollection<BeitragDTO>? beitrags = new ObservableCollection<BeitragDTO>();
 
         private List<CompanyReadDTO> companies;
+
+        private AuthenticationState authState;
 
         private string search = "";
         protected override async Task OnInitializedAsync()
         {
+            authState = await authProvider.GetAuthenticationStateAsync();
+            string objectId = authState.User.Claims.FirstOrDefault(c => c.Type.Contains("objectidentifier"))?.Value;
+
             loggedInUser = await authProvider.GetUserFromAuth(dataAccess);
 
             if(loggedInUser.companies.Count > 0)
             {
-                companies = loggedInUser.companies;
+                string role = authState.User.Claims.FirstOrDefault(c => c.Type.Equals("jobTitle"))?.Value;
 
-                beitrags = new ObservableCollection<BeitragDTO>(companies.FirstOrDefault().beitrags.OrderByDescending(x => x.PostDate).ToList());
+                if (role == "Admin")
+                {
+                    var beitrage = await dataAccess.Beitrags();
+
+                    beitrags = new ObservableCollection<BeitragDTO>(beitrage.Where(c => c.BeitragStatus == BeitragStatus.Geplant));
+                }
+                else
+                {
+                    companies = loggedInUser.companies;
+
+                    beitrags = new ObservableCollection<BeitragDTO>(companies.FirstOrDefault().beitrags.OrderByDescending(x => x.PostDate).ToList());
+                }
+                
             }
 
-
-            var authState = await authProvider.GetAuthenticationStateAsync();
-            string objectId = authState.User.Claims.FirstOrDefault(c => c.Type.Contains("objectidentifier"))?.Value;
 
             if (string.IsNullOrWhiteSpace(objectId) == false)
             {
@@ -74,7 +89,18 @@ namespace BeitragRdrBlazorServerApp.Pages
 
         private async Task FilterBeigtrags(string filter)
         {
-            var output = companies.FirstOrDefault().beitrags;
+            IEnumerable<BeitragDTO> output;
+
+            if(authState.User.Claims.FirstOrDefault(c => c.Type.Equals("jobTitle"))?.Value == "Admin")
+            {
+                output = await dataAccess.Beitrags();
+            }
+            else
+            {
+                output = companies.FirstOrDefault().beitrags;
+            }
+
+            
 
             List<BeitragDTO> allbeitrags = output.ToList().Where(x => x.Name.ToLower().Contains(search.ToLower())).ToList();
 
