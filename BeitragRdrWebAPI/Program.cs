@@ -32,6 +32,15 @@ namespace BeitragRdrWebAPI
                );
 
 
+            //builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.Configuration["api_base_url"]) });
+
+            //builder.Services.AddHttpClient<IHttpDataAccess, HttpDataAccess>("base", client =>
+            //{
+            //    client.BaseAddress = new Uri(builder.Configuration["api_base_url"]);
+            //    client.DefaultRequestHeaders.Accept.Clear();
+            //});
+
+            //builder.Services.AddScoped<IHttpDataAccess, HttpDataAccess>();
 
             builder.Services.AddScoped<IBeitragRepo, BeitragRepo>();
             builder.Services.AddScoped<IUserRepo, UserRepo>();

@@ -13,7 +13,7 @@ namespace BeitragRdrBlazorServerApp.Pages
     public partial class Create
     {
         [Inject]
-        private IHttpDataAccess dataAccess { get; set; }
+        private IDataAccess dataAccess { get; set; }
 
         [Inject]
         private AuthenticationStateProvider authProvider { get; set; }
@@ -93,7 +93,7 @@ namespace BeitragRdrBlazorServerApp.Pages
             }
 
 
-            await dataAccess.CreateBeitrag(createBeitragDTO);
+            dataAccess.CreateBeitrag(createBeitragDTO);
 
 
             navManager.NavigateTo("/");

@@ -77,10 +77,10 @@ namespace BeitragRdrWebAPI.Controllers
         /// </remarks>
         /// <returns></returns>
         [HttpGet]
-        public ActionResult<IEnumerable<BeitragDTO>> GetTheBeitrags()
+        public async Task<ActionResult<IEnumerable<BeitragDTO>>> GetTheBeitrags()
         {
             logger.LogInformation("GetAllBeitrags get called");
-            var output = beitragRepo.GetAllBeitragsAsync();
+            var output = await beitragRepo.GetAllBeitragsAsync();
 
             if(output.Any())
             {

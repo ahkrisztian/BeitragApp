@@ -1,9 +1,12 @@
 using BeitragRdrBlazorServerApp.Data;
 using BeitragRdrBlazorServerApp.Policies;
+using BeitragRdrDataAccessLibrary.Data;
+using BeitragRdrDataAccessLibrary.Repo;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Rewrite;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Identity.Web;
 using Microsoft.Identity.Web.UI;
 
@@ -22,25 +25,20 @@ namespace BeitragRdrBlazorServerApp
 
             builder.Services.AddControllersWithViews().AddMicrosoftIdentityUI();
 
+            builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
+            builder.Services.AddScoped<IDataAccess, DataAccess>();
             builder.Services.AddSingleton<ClientPolicies>(new ClientPolicies());
+
+            builder.Services.AddScoped<IBeitragRepo, BeitragRepo>();
+            builder.Services.AddScoped<IUserRepo, UserRepo>();
+
+            builder.Services.AddDbContext<AppDbContext>(opt => opt.UseSqlite(builder.Configuration.GetConnectionString("Default")));
 
             //builder.Services.AddVersionedApiExplorer().AddMicrosoftIdentityConsentHandler();
 
             builder.Services.AddApiVersioning();
 
-
-            //builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.Configuration["api_base_url"]) });
-
-            builder.Services.AddHttpClient<IHttpDataAccess, HttpDataAccess>("base", client =>
-            {
-                client.BaseAddress = new Uri(builder.Configuration["api_base_url"]);
-                client.DefaultRequestHeaders.Accept.Clear();
-            });
-
-            builder.Services.AddScoped<IHttpDataAccess, HttpDataAccess>();
-
-            
 
             builder.Services.AddAuthentication(OpenIdConnectDefaults.AuthenticationScheme)
                 .AddMicrosoftIdentityWebApp(builder.Configuration.GetSection("AzureAdB2C"));
@@ -59,11 +57,8 @@ namespace BeitragRdrBlazorServerApp
 
             var app = builder.Build();
 
-            // Configure the HTTP request pipeline.
             if (!app.Environment.IsDevelopment())
             {
-                app.UseExceptionHandler("/Error");
-                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
 

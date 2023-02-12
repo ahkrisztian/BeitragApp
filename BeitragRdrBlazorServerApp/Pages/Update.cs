@@ -14,7 +14,7 @@ namespace BeitragRdrBlazorServerApp.Pages
         public string Id { get; set; }
 
         [Inject]
-        private IHttpDataAccess dataAccess { get; set; }
+        private IDataAccess dataAccess { get; set; }
 
         private BeitragDTO beitragDTO;
 
@@ -99,7 +99,7 @@ namespace BeitragRdrBlazorServerApp.Pages
                 beitragDTO.beitragPintr = beitragPintr;
             }
 
-            await dataAccess.UpdateBeitrag(beitragDTO.Id, beitragDTO);
+            dataAccess.UpdateBeitrag(beitragDTO.Id, beitragDTO);
 
 
             navManager.NavigateTo($"/Details/{beitragDTO.Id}");

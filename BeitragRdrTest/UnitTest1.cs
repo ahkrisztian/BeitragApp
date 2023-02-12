@@ -1,4 +1,4 @@
-﻿using AutoMapper;
+using AutoMapper;
 using BeitragRdr.DTOs;
 using BeitragRdr.Models;
 using BeitragRdr.Models.CompanyModel;
@@ -29,9 +29,9 @@ namespace BeitragRdrUnitTest
 
         public BeitragControllerTest()
         {
-            repo= new Mock<IBeitragRepo>();
-            profiles= new BeitragProfiles();
-            mapperConfiguration = new MapperConfiguration(cfg => 
+            repo = new Mock<IBeitragRepo>();
+            profiles = new BeitragProfiles();
+            mapperConfiguration = new MapperConfiguration(cfg =>
             cfg.AddProfile(profiles));
             mapper = new Mapper(mapperConfiguration);
             mocklogger = new Mock<NullLogger<BeitragController>>();
@@ -48,9 +48,8 @@ namespace BeitragRdrUnitTest
         [Fact]
         public void GetAllBeitragsTest_ReturnOk()
         {
-
             //Arrange
-            repo.Setup(x => x.GetAllBeitragsAsync().Result).Returns(GetBeitrags(1));
+            repo.Setup(x => x.GetAllBeitragsAsync()).Returns(GetBeitrags(1));
 
             var beitragController = new BeitragController(repo.Object, mocklogger.Object, mapper);
 
@@ -67,7 +66,7 @@ namespace BeitragRdrUnitTest
         public void GetAllBeitragsDbEmpty_ReturnsBadrequest400()
         {
             //Arrange
-            repo.Setup(x => x.GetAllBeitragsAsync().Result).Returns(GetBeitrags(0));
+            repo.Setup(x => x.GetAllBeitragsAsync()).Returns(GetBeitrags(0));
 
             var beitragController = new BeitragController(repo.Object, mocklogger.Object, mapper);
 
@@ -254,7 +253,7 @@ namespace BeitragRdrUnitTest
             var beitragController = new BeitragController(repo.Object, mocklogger.Object, mapper);
 
             //Act
-            var result = beitragController.PartialBeitragUpdate(0, new Microsoft.AspNetCore.JsonPatch.JsonPatchDocument<BeitragDTO> {  });
+            var result = beitragController.PartialBeitragUpdate(0, new Microsoft.AspNetCore.JsonPatch.JsonPatchDocument<BeitragDTO> { });
 
             //Assert
             Assert.IsType<NotFoundResult>(result.Result);

@@ -19,10 +19,10 @@ namespace BeitragRdrDataAccessLibrary.Repo
             this.context = context;
         }
 
-        public Task<User> GetUser(string objectId)
+        public async Task<User> GetUser(string objectId)
         {
 
-            var output =  context.users.Where(o => o.ObjectIdentifier == objectId)
+            var output =  await context.users.Where(o => o.ObjectIdentifier == objectId)
                 .Include(c => c.companies).ThenInclude(a => a.addresses)
                 .Include(c => c.companies).ThenInclude(p => p.phoneNumbers)
                 .Include(c => c.companies).ThenInclude(b => b.beitrags)

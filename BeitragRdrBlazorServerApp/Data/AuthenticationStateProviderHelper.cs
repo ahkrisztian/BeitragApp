@@ -8,7 +8,7 @@ namespace BeitragRdrBlazorServerApp.Data
     {
         public static async Task<UserReadDTO> GetUserFromAuth(
                             this AuthenticationStateProvider provider,
-                            IHttpDataAccess dataAccess)
+                            IDataAccess dataAccess)
         {
             var authState = await provider.GetAuthenticationStateAsync();
             string objectId = authState.User.Claims.FirstOrDefault(c => c.Type.Contains("objectidentifier"))?.Value;

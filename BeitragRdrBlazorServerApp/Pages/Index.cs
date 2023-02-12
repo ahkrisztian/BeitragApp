@@ -4,7 +4,6 @@ using BeitragRdr.Models.UserModel;
 using BeitragRdrBlazorServerApp.Data;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
-using Microsoft.DotNet.Scaffolding.Shared;
 using System.Collections.ObjectModel;
 using System.Runtime.CompilerServices;
 using System.Security.Cryptography.Pkcs;
@@ -14,7 +13,7 @@ namespace BeitragRdrBlazorServerApp.Pages
     public partial class Index
     {
         [Inject]
-        private IHttpDataAccess dataAccess { get; set; }
+        private IDataAccess dataAccess { get; set; }
 
         [Inject]
         private AuthenticationStateProvider authProvider { get; set; }

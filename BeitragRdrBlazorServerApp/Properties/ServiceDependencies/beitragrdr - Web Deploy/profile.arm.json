@@ -21,7 +21,7 @@
     },
     "resourceName": {
       "type": "string",
-      "defaultValue": "csillasocial",
+      "defaultValue": "beitragrdr",
       "metadata": {
         "description": "Name of the main resource to be created by this template."
       }

@@ -12,9 +12,9 @@ namespace BeitragRdrBlazorServerApp.Pages
         public string Id { get; set; }
 
         [Inject]
-        private IHttpDataAccess dataAccess { get; set; }
+        private IDataAccess dataAccess { get; set; }
 
-        private BeitragDTO? beitragDTO;
+        private BeitragDTO beitragDTO = new BeitragDTO();
 
         protected async override Task OnInitializedAsync()
         {
@@ -33,17 +33,17 @@ namespace BeitragRdrBlazorServerApp.Pages
 
         private void Delete(BeitragDTO beitrag)
         {
-            dataAccess.DeleteBeitrag(beitrag.Id);
+            //dataAccess.DeleteBeitrag(beitrag.Id);
 
             navManager.NavigateTo("/");
         }
 
         private void Frei()
         {
-            var patchDoc = new JsonPatchDocument<BeitragDTO>();
-            patchDoc.Replace(e => e.BeitragStatus.Value, BeitragStatus.Geplant);
+            //var patchDoc = new JsonPatchDocument<BeitragDTO>();
+            //patchDoc.Replace(e => e.BeitragStatus.Value, BeitragStatus.Geplant);
 
-            dataAccess.PartialUpdateBeitrag(beitragDTO.Id, patchDoc);
+            //dataAccess.PartialUpdateBeitrag(beitragDTO.Id, patchDoc);
 
             navManager.NavigateTo("/");
         }

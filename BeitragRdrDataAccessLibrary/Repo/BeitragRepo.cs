@@ -17,15 +17,15 @@ namespace BeitragRdrDataAccessLibrary.Repo
             this.context = context;
         }
 
-        public IEnumerable<Beitrag> GetAllBeitragsAsync()
+        public async Task<IEnumerable<Beitrag>> GetAllBeitragsAsync()
         {
             try
             {
-                var output = context.Beitrags
+                var output = await context.Beitrags
                 .Include(f => f.beitragFace).ThenInclude(i => i.Image)
                 .Include(p => p.beitragPintr).ThenInclude(i => i.Image)
                 .Include(inst => inst.beitragInsta).ThenInclude(i => i.Image)
-                .Include(t => t.tags);
+                .Include(t => t.tags).ToListAsync();
 
                 return output;
             }
@@ -36,13 +36,13 @@ namespace BeitragRdrDataAccessLibrary.Repo
             }
         }
 
-        public Task<Beitrag> GetBeitragById(int id)
+        public async Task<Beitrag> GetBeitragById(int id)
         {
             context.ChangeTracker.Clear();
 
             try
             {
-                var output = context.Beitrags.Where(i => i.Id == id)
+                var output = await context.Beitrags.Where(i => i.Id == id)
                 .Include(f => f.beitragFace).ThenInclude(i => i.Image)
                 .Include(p => p.beitragPintr).ThenInclude(i => i.Image)
                 .Include(inst => inst.beitragInsta).ThenInclude(i => i.Image)
@@ -60,13 +60,13 @@ namespace BeitragRdrDataAccessLibrary.Repo
         {
             try
             {
-                var output = context.Beitrags.Where(i => i.CompanyId == id)
+                var output = await context.Beitrags.Where(i => i.CompanyId == id)
                     .Include(c => c.company).ThenInclude(a => a.addresses)
                     .Include(c => c.company).ThenInclude(p => p.phoneNumbers)
                     .Include(f => f.beitragFace).ThenInclude(i => i.Image)
                     .Include(p => p.beitragPintr).ThenInclude(i => i.Image)
                     .Include(inst => inst.beitragInsta).ThenInclude(i => i.Image)
-                    .Include(t => t.tags).ToList();
+                    .Include(t => t.tags).ToListAsync();
 
                 return output;
             }
