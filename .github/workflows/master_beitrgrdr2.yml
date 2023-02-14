@@ -51,7 +51,7 @@ jobs:
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v2
         with:
-          app-name: 'beitragrdr0'
+          app-name: 'beitragrdr'
           slot-name: 'Production'
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_8D781A2F392F4D34A5EAEA4A59F3D863 }}
           package: .
