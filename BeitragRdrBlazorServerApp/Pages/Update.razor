@@ -130,11 +130,13 @@
                         </div>
                     </div>
                 }
-                <div class="row">
-                    <div class="col-11">
-                        <button class="btn btn-success" type="submit">Submit</button>
-                        <button class="btn btn-primary" @onclick="(() => Back())">Back</button>
+                <div class="row m-1">
+                    <div class="col-3">                    
+                        <button class="btn btn-primary default-buttons" @onclick="(() => Back())">Back</button>
                     </div>
+                    <div class="col-8">
+                        <button class="btn btn-success default-buttons" type="submit">Submit</button>
+                    </div>              
                 </div>
             </EditForm>           
         </div>

@@ -33,7 +33,7 @@ namespace BeitragRdrBlazorServerApp.Pages
 
         private void Delete(BeitragDTO beitrag)
         {
-            //dataAccess.DeleteBeitrag(beitrag.Id);
+            dataAccess.DeleteBeitrag(beitrag.Id);
 
             navManager.NavigateTo("/");
         }

@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -25,7 +26,8 @@ namespace BeitragRdr.DTOs
 
         public DateTime? CreatedDate { get; set; } = DateTime.Now;
 
-        public DateTime? PostDate { get; set; }
+        [DataType(DataType.Date)]
+        public DateTime? PostDate { get; set; } = DateTime.UtcNow;
 
         [Required]
         [Range(1, int.MaxValue, ErrorMessage = "Please select a Company")]

@@ -76,15 +76,15 @@ namespace BeitragRdrDataAccessLibrary.Repo
             }
         }
 
-        public void CreateBeitrag(Beitrag beitrag)
+        public async Task CreateBeitrag(Beitrag beitrag)
         {
             if(beitrag == null)
             {
                 throw new ArgumentNullException(nameof(beitrag));
             }
 
-            context.Beitrags.Add(beitrag);
-            context.SaveChangesAsync();
+            await context.Beitrags.AddAsync(beitrag);
+            await context.SaveChangesAsync();
 
             //return context.Beitrags.OrderByDescending(s => s.Id).FirstOrDefault().Id;
         }

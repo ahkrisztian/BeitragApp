@@ -290,3 +290,7 @@ a, .btn-link {
     border-radius: 10px;
     padding: 1rem;
 }
+
+.default-buttons {
+    width: 78px;
+}

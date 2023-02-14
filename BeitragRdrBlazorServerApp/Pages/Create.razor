@@ -42,11 +42,11 @@
                     <label>Facebook</label>
                     <div>
                         <label>Name:</label>
-                        <InputText id="name" class="form-control" @bind-Value="beitragFace.Name" />
+                        <InputText id="name" class="form-control" @bind-Value="createBeitragDTO.beitragFace.Name" />
                     </div>
                     <div>
                         <label>Description:</label>
-                        <InputText id="name" class="form-control" @bind-Value="beitragFace.Description" />
+                        <InputText id="name" class="form-control" @bind-Value="createBeitragDTO.beitragFace.Description" />
                     </div>
                 </div>
 
@@ -54,11 +54,11 @@
                     <label>Instagram</label>
                     <div>
                         <label>Name:</label>
-                        <InputText id="name" class="form-control" @bind-Value="beitragInsta.Name" />
+                        <InputText id="name" class="form-control" @bind-Value="createBeitragDTO.beitragInsta.Name" />
                     </div>
                     <div>
                         <label>Description:</label>
-                        <InputText id="name" class="form-control" @bind-Value="beitragInsta.Description" />
+                        <InputText id="name" class="form-control" @bind-Value="createBeitragDTO.beitragInsta.Description" />
                     </div>
                 </div>
 
@@ -66,11 +66,11 @@
                     <label>Pinterest</label>
                     <div>
                         <label>Name:</label>
-                        <InputText id="name" class="form-control" @bind-Value="beitragPintr.Name" />
+                        <InputText id="name" class="form-control" @bind-Value="createBeitragDTO.beitragPintr.Name" />
                     </div>
                     <div>
                         <label>Description:</label>
-                        <InputText id="name" class="form-control" @bind-Value="beitragPintr.Description" />
+                        <InputText id="name" class="form-control" @bind-Value="createBeitragDTO.beitragPintr.Description" />
                     </div>
                 </div>
                 <div class="form-group create-beitrag-entry">
@@ -134,7 +134,14 @@
                     </div>
                 </div>
             }
-            <button class="btn btn-success btn-lg btn-block" style="margin-top: 10px" type="submit">Submit</button>
+            <div class="row m-1">
+                <div class="col-3">                    
+                    <button class="btn btn-primary default-buttons" @onclick="(() => Back())">Back</button>
+                </div>
+                <div class="col-8">
+                    <button class="btn btn-success default-buttons" type="submit">Submit</button>
+                </div>              
+            </div>           
         </EditForm>
     </div>
 </div>

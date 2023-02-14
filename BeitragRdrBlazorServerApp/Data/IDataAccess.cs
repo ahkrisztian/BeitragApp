@@ -9,7 +9,7 @@ namespace BeitragRdrBlazorServerApp.Data
         Task<BeitragDTO> BeitragById(int id);
         Task<IEnumerable<BeitragDTO>> Beitrags();
         Task<List<CompanyReadDTO>> Companies();
-        void CreateBeitrag(CreateBeitragDTO createBeitragDTO);
+        Task CreateBeitrag(CreateBeitragDTO createBeitragDTO);
         void CreateUser(UserCreateDTO createUser);
         void DeleteBeitrag(int id);
         Task<UserReadDTO> GetUserByObjectId(string objectId);

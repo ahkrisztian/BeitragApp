@@ -43,9 +43,9 @@ namespace BeitragRdrBlazorServerApp.Data
             return mapper.Map<List<CompanyReadDTO>>(output);
         }
 
-        public void CreateBeitrag(CreateBeitragDTO createBeitragDTO)
+        public async Task CreateBeitrag(CreateBeitragDTO createBeitragDTO)
         {
-            beitragRepo.CreateBeitrag(mapper.Map<Beitrag>(createBeitragDTO));
+            await beitragRepo.CreateBeitrag(mapper.Map<Beitrag>(createBeitragDTO));
         }
 
         public void CreateUser(UserCreateDTO createUser)

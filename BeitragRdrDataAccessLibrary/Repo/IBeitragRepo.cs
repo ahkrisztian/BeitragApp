@@ -5,7 +5,7 @@ namespace BeitragRdrDataAccessLibrary.Repo
 {
     public interface IBeitragRepo
     {
-        void CreateBeitrag(Beitrag beitrag);
+        Task CreateBeitrag(Beitrag beitrag);
         void DeleteBeitrag(int id);
         Task<IEnumerable<Beitrag>> GetAllBeitragsAsync();
         Task<Beitrag> GetBeitragById(int id);
