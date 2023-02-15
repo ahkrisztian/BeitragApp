@@ -32,15 +32,15 @@ namespace BeitragRdrWebAPI
                );
 
 
-            //builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.Configuration["api_base_url"]) });
+            builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.Configuration["api_base_url"]) });
 
-            //builder.Services.AddHttpClient<IHttpDataAccess, HttpDataAccess>("base", client =>
-            //{
-            //    client.BaseAddress = new Uri(builder.Configuration["api_base_url"]);
-            //    client.DefaultRequestHeaders.Accept.Clear();
-            //});
+            builder.Services.AddHttpClient<IHttpDataAccess, HttpDataAccess>("base", client =>
+            {
+                client.BaseAddress = new Uri(builder.Configuration["api_base_url"]);
+                client.DefaultRequestHeaders.Accept.Clear();
+            });
 
-            //builder.Services.AddScoped<IHttpDataAccess, HttpDataAccess>();
+            builder.Services.AddScoped<IHttpDataAccess, HttpDataAccess>();
 
             builder.Services.AddScoped<IBeitragRepo, BeitragRepo>();
             builder.Services.AddScoped<IUserRepo, UserRepo>();
@@ -64,7 +64,7 @@ namespace BeitragRdrWebAPI
                 {
                     Version = "v1",
                     Title = "Beitrag Creator",
-                    Description = "Beiträge Anlegen, Lesen, Aktualisieren und Löschen für FB, Insta und Pinterest.",
+                    Description = "BeitrÃ¤ge Anlegen, Lesen, Aktualisieren und LÃ¶schen fÃ¼r FB, Insta und Pinterest.",
                     Contact = new OpenApiContact()
                     {
                         Name = "Krisztian",
@@ -81,12 +81,12 @@ namespace BeitragRdrWebAPI
                 opts.DocumentFilter<JsonPatchDocumentFilter>();
             });
 
-            //builder.Services.AddAuthorization(opt =>
-            //{
-            //    opt.FallbackPolicy = new AuthorizationPolicyBuilder()
-            //    .RequireAuthenticatedUser()
-            //    .Build();
-            //});
+            builder.Services.AddAuthorization(opt =>
+            {
+                opt.FallbackPolicy = new AuthorizationPolicyBuilder()
+                .RequireAuthenticatedUser()
+                .Build();
+            });
 
             builder.Services.AddApiVersioning(opts =>
             {
@@ -119,7 +119,7 @@ namespace BeitragRdrWebAPI
 
             app.UseHttpsRedirection();
 
-            //app.UseAuthorization();
+            app.UseAuthorization();
 
 
             app.MapControllers();
